@@ -4,8 +4,8 @@ public class Employee {
     private  username="";
     private String password="";
     private String turn="";
-    private string carlos="";
-
+    private String carlos="";
+    private int pepesuarez = 23;
     public Employee(){
     }
 
