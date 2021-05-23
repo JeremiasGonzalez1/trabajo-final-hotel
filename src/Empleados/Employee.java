@@ -1,9 +1,10 @@
 package Empleados;
 
 public class Employee {
-    private String username="";
+    private  username="";
     private String password="";
     private String turn="";
+    private string carlos="";
 
     public Employee(){
     }
