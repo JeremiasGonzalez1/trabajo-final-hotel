@@ -2,6 +2,7 @@ package rooms;
 
 public class Room {
     private int numberBeds=0;
+    private int id = 0;
     private boolean condition=false;
     private static Integer rooms=0;
 

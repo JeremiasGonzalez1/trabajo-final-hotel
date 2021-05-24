@@ -1,18 +1,26 @@
 package Empleados;
 
 public class Employee {
-    private  username="";
+    private String username= "";
     private String password="";
     private String turn="";
-    private String carlos="";
-    private int pepesuarez = 23;
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    private double salary;
     public Employee(){
     }
 
-    public Employee(String username, String password, String turn) {
+    public Employee(String username, String password, String turn, double salary) {
         this.username = username;
         this.password = password;
         this.turn = turn;
+        this.salary = salary;
     }
 
     public String getUsername() {
