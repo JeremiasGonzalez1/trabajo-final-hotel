@@ -1,11 +1,13 @@
 package Empleados;
 
+import java.util.Date;
+
 public class Employee {
-    private  username="";
+    private  String username="";
     private String password="";
     private String turn="";
-    private String carlos="";
-    private int pepesuarez = 23;
+
+
     public Employee(){
     }
 
@@ -38,4 +40,16 @@ public class Employee {
     public void setTurn(String turn) {
         this.turn = turn;
     }
+
+    public void singing(String username){
+        Date dateIn=new Date();
+        /*funcion para el guardado de fichaje en el archivo*/
+    }
+
+    public void seeSignings(String username){
+        //funcion para la apertura de archivo y lectura del mismo
+    }
+
+
+
 }
