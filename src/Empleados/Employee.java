@@ -3,18 +3,34 @@ package Empleados;
 import java.util.Date;
 
 public class Employee {
+<<<<<<< HEAD
     private  String username="";
     private String password="";
     private String turn="";
 
 
+=======
+    private String username= "";
+    private String password="";
+    private String turn="";
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    private double salary;
+>>>>>>> origin/master
     public Employee(){
     }
 
-    public Employee(String username, String password, String turn) {
+    public Employee(String username, String password, String turn, double salary) {
         this.username = username;
         this.password = password;
         this.turn = turn;
+        this.salary = salary;
     }
 
     public String getUsername() {
