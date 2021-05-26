@@ -6,5 +6,5 @@ public interface RoomCheck {
 
     public boolean consultaHabitacion();
 
-    boolean consultaHabitacion(Date in, Date out);
+    boolean consultaHabitacion(int numberBed, Date in, Date out);
 }

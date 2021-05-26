@@ -3,26 +3,11 @@ package Empleados;
 import java.util.Date;
 
 public class Employee {
-<<<<<<< HEAD
     private  String username="";
     private String password="";
     private String turn="";
+    private double salary=0;
 
-
-=======
-    private String username= "";
-    private String password="";
-    private String turn="";
-    public double getSalary() {
-        return salary;
-    }
-
-    public void setSalary(double salary) {
-        this.salary = salary;
-    }
-
-    private double salary;
->>>>>>> origin/master
     public Employee(){
     }
 
@@ -30,6 +15,14 @@ public class Employee {
         this.username = username;
         this.password = password;
         this.turn = turn;
+        this.salary = salary;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
         this.salary = salary;
     }
 
@@ -56,6 +49,7 @@ public class Employee {
     public void setTurn(String turn) {
         this.turn = turn;
     }
+
 
     public void singing(String username){
         Date dateIn=new Date();

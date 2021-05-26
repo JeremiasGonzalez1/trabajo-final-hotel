@@ -28,8 +28,9 @@ public class Login {
         this.password = password;
     }
 
-    public boolean confirmUser(){ return (/*metodo para leer archivo*/);
+    public boolean confirmUser() {
+        return (false/*metodo para leer archivo*/);
     }
 
-    
+
 }
