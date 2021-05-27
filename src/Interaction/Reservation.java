@@ -6,12 +6,18 @@ import rooms.Room;
 import java.util.Date;
 import java.util.List;
 
-public abstract class Reservation implements RoomCheck {
+public class Reservation implements RoomCheck {
     private Date dateAdmission = new Date();
     private Date dateOut = new Date();
 
+    public Reservation(Date dateAdmission, Date dateOut) {
+        this.dateAdmission = dateAdmission;
+        this.dateOut = dateOut;
+    }
+
+
     @Override
-    public boolean consultaHabitacion(int NumberBed, Date in, Date out) {
+    public boolean consultaHabitacion(int numberBed, Date in, Date out) {
         ///bajar el archivo a una lista
         /*
          **/
@@ -38,6 +44,8 @@ public abstract class Reservation implements RoomCheck {
         * */
         return false;
     }
+
+
 
     private int seleccionarHabitacion(List<Room> listOfBeds) {
         int flag = 0;

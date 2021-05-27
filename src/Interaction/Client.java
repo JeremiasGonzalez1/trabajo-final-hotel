@@ -1,8 +1,10 @@
 package Interaction;
 
+import java.util.Date;
 import java.util.Scanner;
 
 import Login.Login;
+
 
 public class Client {
     private String name = "";
@@ -139,7 +141,35 @@ public class Client {
         } while (x != true);
     }
 
-    public void menuClient(){
+    public void menuClient() {
+        int option = 0;
+        do {
+            option = optionsMenu();
+            switch (option) {
+                case 1:
 
+            }
+        } while (option != 0);
+    }
+
+    public void createReservation(){
+        Date date1= new Date();
+        Date date2= new Date();
+        Reservation reservation = new Reservation(date1, date2);
+        
+    }
+
+    private int optionsMenu() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("1- reservas");
+        System.out.println("2- Mirar perfil");
+        System.out.println("3- Modificar perfil");
+        System.out.println("4- Mirar consumos");
+        System.out.println("0- Para salir");
+        String keyInput;
+        keyInput = scanner.nextLine();
+        int option = Integer.parseInt(keyInput);
+
+        return option;
     }
 }
