@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Reservation implements RoomCheck {
+
     private Date dateAdmission = new Date();
     private Date dateOut = new Date();
 

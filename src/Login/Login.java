@@ -1,6 +1,10 @@
 package Login;
 
-public class Login {
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Login implements Serializable{
     private String username = "";
     private String password = "";
 
@@ -29,7 +33,35 @@ public class Login {
     }
 
     public boolean confirmUser() {
-        return (false/*metodo para leer archivo*/);
+
+        String path = ":C//User//Desktop//login.txt";
+
+        File file = new File(path);
+
+        boolean flag = false;
+
+        try {
+            ObjectInputStream objInStream = new ObjectInputStream(new FileInputStream(file));
+
+            Object aux = objInStream.readObject();
+
+            while(aux != null && !flag)
+            {
+                if(aux.equals(this))
+                {
+                    flag = true;
+                }
+
+                aux = objInStream.readObject();
+            }
+
+            objInStream.close();
+
+        } catch (IOException | ClassNotFoundException ignored) {
+        }
+
+
+        return flag;
     }
 
 
