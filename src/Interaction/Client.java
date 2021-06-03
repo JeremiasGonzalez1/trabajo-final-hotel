@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 import Login.Login;
-
+import Interaction.Reservation;
 
 public class Client {
     private String name = "";
@@ -152,11 +152,45 @@ public class Client {
         } while (option != 0);
     }
 
-    public void createReservation(){
-        Date date1= new Date();
-        Date date2= new Date();
-        Reservation reservation = new Reservation(date1, date2);
-        
+    //**FUNCION IMPORTANTE NO DEJAR DE VER**///
+
+    public void createReservation() {
+
+        Reservation reservation = new Reservation();
+        reservation = upDateIn(reservation);
+        reservation=upDateOut(reservation);
+        System.out.println(reservation.toString());
+
+        //Falta parte de codigo que hay que realizar para ver que habitaciones estan disponibles para rentar.
+        //no olvidarse
+    }
+
+    public Reservation upDateIn(Reservation dateIn) {
+        Scanner scanner = new Scanner(System.in);
+        String keyInput;
+        System.out.println("Coloque mes de ingreso");
+        keyInput = scanner.nextLine();
+        int mont = Integer.parseInt(keyInput);
+        System.out.println("coloque dia de ingreso");
+        keyInput = scanner.nextLine();
+        int day = Integer.parseInt(keyInput);
+        Date date = new Date(2021, mont, day);
+        dateIn.setDateAdmission(date);
+        return dateIn;
+    }
+
+    public Reservation upDateOut(Reservation dateOut) {
+        Scanner scanner = new Scanner(System.in);
+        String keyImput;
+        System.out.println("coloque mes de egreso");
+        keyImput = scanner.nextLine();
+        int mont = Integer.parseInt(keyImput);
+        System.out.println("coloque dia de egreso");
+        keyImput = scanner.nextLine();
+        int day = Integer.parseInt(keyImput);
+        Date date = new Date(2021, mont, day);
+        dateOut.setDateOut(date);
+        return dateOut;
     }
 
     private int optionsMenu() {

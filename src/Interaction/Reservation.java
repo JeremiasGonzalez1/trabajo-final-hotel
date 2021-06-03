@@ -1,8 +1,12 @@
 package Interaction;
 
+import Utils.ListReservations;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import interfaces.RoomCheck;
 import rooms.Room;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -11,11 +15,31 @@ public class Reservation implements RoomCheck {
     private Date dateAdmission = new Date();
     private Date dateOut = new Date();
 
+    public Reservation() {
+        dateAdmission = null;
+        dateOut = null;
+    }
+
     public Reservation(Date dateAdmission, Date dateOut) {
         this.dateAdmission = dateAdmission;
         this.dateOut = dateOut;
     }
 
+    public Date getDateAdmission() {
+        return dateAdmission;
+    }
+
+    public void setDateAdmission(Date dateAdmission) {
+        this.dateAdmission = dateAdmission;
+    }
+
+    public Date getDateOut() {
+        return dateOut;
+    }
+
+    public void setDateOut(Date dateOut) {
+        this.dateOut = dateOut;
+    }
 
     @Override
     public boolean consultaHabitacion(int numberBed, Date in, Date out) {
@@ -45,7 +69,6 @@ public class Reservation implements RoomCheck {
         * */
         return false;
     }
-
 
 
     private int seleccionarHabitacion(List<Room> listOfBeds) {
@@ -87,5 +110,38 @@ public class Reservation implements RoomCheck {
 
     }
 
+    public void saveOnFile() throws IOException {
+        try {
+            File file = new File("archivo_reservas");
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(file, this);
 
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public List<Reservation> readToFile(List<Reservation>listReservations) throws  IOException{
+        Reservation reservation=new Reservation();
+        try {
+            File file = new File("archivo_reservas");
+            ObjectMapper mapper=new ObjectMapper();
+            while (file.length()==0){
+                reservation = mapper.readValue(file, Reservation.class);
+                listReservations.add(reservation);
+            }
+            return listReservations;
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+      return listReservations;
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "dateAdmission=" + dateAdmission +
+                ", dateOut=" + dateOut +
+                '}';
+    }
 }
