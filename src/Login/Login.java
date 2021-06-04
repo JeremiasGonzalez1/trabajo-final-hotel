@@ -3,6 +3,7 @@ package Login;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Login implements Serializable{
     private String username = "";
@@ -32,34 +33,29 @@ public class Login implements Serializable{
         this.password = password;
     }
 
-    public boolean confirmUser() {
+    public boolean confirmUser(Login login) {
 
-        String path = ":C//User//Desktop//login.txt";
+        String path = ":C//User//Desktop//login.json";
 
         File file = new File(path);
 
         boolean flag = false;
 
         try {
-            ObjectInputStream objInStream = new ObjectInputStream(new FileInputStream(file));
+            ObjectMapper mapper = new ObjectMapper();
 
-            Object aux = objInStream.readObject();
+            ArrayList<Login> logins = mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(ArrayList.class, Login.class));
 
-            while(aux != null && !flag)
+            for(Login aux : logins)
             {
-                if(aux.equals(this))
+                if(aux.equals(login))
                 {
                     flag = true;
                 }
-
-                aux = objInStream.readObject();
             }
 
-            objInStream.close();
-
-        } catch (IOException | ClassNotFoundException ignored) {
+        } catch (IOException ignored) {
         }
-
 
         return flag;
     }

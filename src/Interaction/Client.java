@@ -134,7 +134,7 @@ public class Client {
         Login login = new Login(this.getUsername(), this.getPassword());
         boolean x;
         do {
-            x = login.confirmUser();
+            x = login.confirmUser(login);
             if (!x) {
                 System.out.println("usuario / contraseña incorrecto");
             }

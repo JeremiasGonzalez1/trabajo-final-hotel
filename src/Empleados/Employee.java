@@ -1,9 +1,13 @@
 package Empleados;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import Login.Login;
 import Sign.Sign;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Employee implements Serializable{
     private String username = "";
@@ -11,7 +15,7 @@ public class Employee implements Serializable{
     private String turn = "";
     private double salary = 0;
     private Sign sign;
-
+    private static final long serialVersionUID = 0;
     public Employee() {
     }
 
@@ -74,48 +78,50 @@ public class Employee implements Serializable{
 
         Date date = new Date();
         this.sign.setDateOut(date);
-        String path = "sign.txt";//Ubicacion del archivo
+        String path = "sign.json";//Ubicacion del archivo
 
         File file = new File(path);
         try {
-            ObjectOutputStream objOutStream = new ObjectOutputStream(new FileOutputStream(file, true));
+            List<Sign> signs = new ArrayList<>();
 
-            objOutStream.writeObject(this.sign);
+            ObjectMapper mapper = new ObjectMapper();
 
-            objOutStream.close();
+            if(file.exists()){
+                signs = mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(List.class, Sign.class));
+            }
+            signs.add(this.sign);
+            mapper.writeValue(file, signs);
 
         } catch (IOException e) {
-            e.printStackTrace();
         }
 
         this.sign = null;
     }
 
-    public void seeSigns(){
-        String path = "sign.txt";//Direccion del archivo
+    public List<Sign> seeSigns(){
+        String path = "sign.json";//Direccion del archivo
         File file = new File(path);
-
+        List <Sign> signs = new ArrayList();
         try {
-            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file));
-            Object aux = objectInputStream.readObject();
-            Sign auxSign = new Sign();
-            while(aux != null){
-                if(aux instanceof Sign)
-                {
-                    auxSign = (Sign) aux;
-                }
-                if(auxSign.getUsername().equals(this.username)){
-                    System.out.println(auxSign);
-                }
-                objectInputStream.readObject();
+            ObjectMapper mapper = new ObjectMapper();
+
+            if(file.exists()){
+                signs = mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(List.class, Sign.class));
+
+//                for(Sign aux : signs)
+//                {
+//                    if(this.username.equals(aux.getUsername())){
+//                        System.out.println(aux.toString());
+//                    }
+//                }
             }
 
-            objectInputStream.close();
 
-        }catch (IOException | ClassNotFoundException e) {
+        }catch (IOException e) {
             System.out.println("No se pudo leer el archivo");
         }
 
+        return signs;
     }
 
     public boolean loginEmpoyee() {
@@ -135,7 +141,7 @@ public class Employee implements Serializable{
             Login login = new Login(this.username, this.password);
 
 
-            if (!login.confirmUser()) {
+            if (!login.confirmUser(login)) {
                 flag = false;
 
                 System.out.println("El usuario o la contraseña son incorrectos\n");
