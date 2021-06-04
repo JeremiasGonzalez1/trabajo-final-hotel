@@ -1,7 +1,10 @@
 package com.company;
 import Empleados.Employee;
 import  Interaction.Client;
+import Interaction.Reservation;
 import Sign.Sign;
+import UtilitiesFiles.DataFile;
+import Utils.ListReservations;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,16 +29,20 @@ public class Main {
 //
 //        empleado2.signOut();
 
-        List<Sign> signs = new ArrayList<>();
+        String nameFileReservation="reservations.json";
+        Date date1=new Date();
+        Date date2=new Date(2021, 06, 26);
 
-        signs = empleado2.seeSigns();
+        Reservation reservation=new Reservation(date1, date2);
 
-        for(Sign aux : signs)
-        {
-            if(empleado.getUsername().equals(aux.getUsername())){
-                System.out.println(aux.toString());
-            }
-        }
+        DataFile dataFile=new DataFile();
+        List<Reservation>reservations=new ArrayList<>();
+        dataFile.saveOnFile(reservation, nameFileReservation);
+
+        reservations=dataFile.readOnFile(nameFileReservation);
+
+        ListReservations listReservations=new ListReservations(reservations);
+        listReservations.viewDataList();
 
 
     }

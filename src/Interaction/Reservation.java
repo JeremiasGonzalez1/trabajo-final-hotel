@@ -7,8 +7,9 @@ import rooms.Room;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
+import java.io.Serializable;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class Reservation implements RoomCheck {
 
@@ -110,32 +111,7 @@ public class Reservation implements RoomCheck {
 
     }
 
-    public void saveOnFile() throws IOException {
-        try {
-            File file = new File("archivo_reservas");
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(file, this);
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public List<Reservation> readToFile(List<Reservation>listReservations) throws  IOException{
-        Reservation reservation=new Reservation();
-        try {
-            File file = new File("archivo_reservas");
-            ObjectMapper mapper=new ObjectMapper();
-            while (file.length()==0){
-                reservation = mapper.readValue(file, Reservation.class);
-                listReservations.add(reservation);
-            }
-            return listReservations;
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-      return listReservations;
-    }
 
     @Override
     public String toString() {
