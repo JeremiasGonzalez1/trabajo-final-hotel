@@ -6,6 +6,7 @@ import java.util.List;
 
 public class ListReservations {
     private List<Reservation>listReservations;
+    public ListReservations(){}
 
     public ListReservations(List<Reservation> listReservations) {
         this.listReservations = listReservations;

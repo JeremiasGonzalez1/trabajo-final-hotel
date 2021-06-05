@@ -33,68 +33,33 @@ public class DataFile {
         }
     }
 
-    public List<Reservation> readOnFile(String path){
-        List<Reservation>reservationList=new ArrayList<>();
+    public <T> List<T> readLists(String url, Class<T> genericOb) {
+        List<T> data = null;
+        ObjectMapper mapper = new ObjectMapper();
         try {
-            ObjectMapper mapper=new ObjectMapper();
-            File file =new File(path);
-            if(file.exists()){
-                reservationList = mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(List.class, Reservation.class));
-            }
-
-        }catch (IOException ex){
-            ex.printStackTrace();
-        }
-        return reservationList;
-    }
-
-
-    public List<Login> loginsList(String path){
-
-        File file = new File(path);
-
-        List <Login> logins = new ArrayList<>();
-
-        try{
-            ObjectMapper mapper = new ObjectMapper();
-
-            if(file.exists()){
-                logins = mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(List.class, Login.class));
+            File file = new File(url);
+            if (file.exists()) {
+                data = mapper.readValue(file,
+                        mapper.getTypeFactory().constructCollectionType(List.class, genericOb));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return logins;
+        return data;
     }
 
-    public List<Sign> employeeSignsList(){
-        String path = "sign.json";//Direccion del archivo
+
+
+
+    public void employeeSingOut(Sign sign, List<Sign> signList) {
+        String path = "sign.json";
         File file = new File(path);
-        List <Sign> signs = new ArrayList();
+        List<Sign> signs = new ArrayList<>();
+
         try {
             ObjectMapper mapper = new ObjectMapper();
 
-            if(file.exists()){
-                signs = mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(List.class, Sign.class));
-            }
-
-        }catch (IOException e) {
-            System.out.println("No se pudo leer el archivo");
-        }
-
-        return signs;
-    }
-
-    public void employeeSingOut(Sign sign){
-        String path = "sign.json";
-        File file = new File(path);
-        List <Sign> signs = new ArrayList<>();
-
-        try{
-            ObjectMapper mapper = new ObjectMapper();
-
-            signs = employeeSignsList();
+            signList.add(sign);
 
             mapper.writeValue(file, signs);
         } catch (IOException e) {

@@ -15,15 +15,18 @@ public class Reservation implements RoomCheck {
 
     private Date dateAdmission = new Date();
     private Date dateOut = new Date();
+    private int numRoom=0;
 
     public Reservation() {
         dateAdmission = null;
         dateOut = null;
+        numRoom = 0;
     }
 
     public Reservation(Date dateAdmission, Date dateOut) {
         this.dateAdmission = dateAdmission;
         this.dateOut = dateOut;
+        this.numRoom=0;
     }
 
     public Date getDateAdmission() {
@@ -40,6 +43,14 @@ public class Reservation implements RoomCheck {
 
     public void setDateOut(Date dateOut) {
         this.dateOut = dateOut;
+    }
+
+    public int getNumRoom() {
+        return numRoom;
+    }
+
+    public void setNumRoom(int numRoom) {
+        this.numRoom = numRoom;
     }
 
     @Override

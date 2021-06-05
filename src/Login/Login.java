@@ -41,7 +41,7 @@ public class Login implements Serializable{
 
         DataFile data = new DataFile();
 
-        logins = data.listLogin(path);
+        //logins = data.listLogin(path);
 
         for(Login aux : logins){
             if (login.equals(aux)) {

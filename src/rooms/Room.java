@@ -3,12 +3,20 @@ package rooms;
 public class Room {
     private int numberBeds=0;
     private int id = 0;
-    private boolean condition=false;
+    private RoomStatus status;
     private static Integer rooms=0;
 
-    public Room(int numberBeds, boolean condition) {
+    public enum RoomStatus {
+        DISPONIBLE,
+        OCUPADA,
+        RAPRANDOSE,
+        LIMPIANDOSE;
+    }
+
+    public Room(int numberBeds, RoomStatus status) {
         this.numberBeds = numberBeds;
-        this.condition = condition;
+        this.status = status;
+
         rooms++;
     }
 
@@ -20,12 +28,12 @@ public class Room {
         this.numberBeds = numberBeds;
     }
 
-    public boolean isCondition() {
-        return condition;
+    public RoomStatus isCondition() {
+        return status;
     }
 
-    public void setCondition(boolean condition) {
-        this.condition = condition;
+    public void setCondition(RoomStatus condition) {
+        this.status = condition;
     }
 
     public static Integer getRooms() {
@@ -35,4 +43,5 @@ public class Room {
     public static void setRooms(Integer rooms) {
         Room.rooms = rooms;
     }
+
 }
