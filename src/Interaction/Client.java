@@ -134,11 +134,11 @@ public class Client {
         Login login = new Login(this.getUsername(), this.getPassword());
         boolean x;
         do {
-            x = login.confirmUser(login);
+            x = login.confirmUser(login, "clientLogin.json");
             if (!x) {
                 System.out.println("usuario / contraseña incorrecto");
             }
-        } while (x != true);
+        } while (!x);
     }
 
     public void menuClient() {

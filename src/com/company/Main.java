@@ -37,7 +37,7 @@ public class Main {
 
         DataFile dataFile=new DataFile();
         List<Reservation>reservations=new ArrayList<>();
-        dataFile.saveOnFile(reservation, nameFileReservation);
+        dataFile.saveOnFileReservation(reservation, nameFileReservation);
 
         reservations=dataFile.readOnFile(nameFileReservation);
 

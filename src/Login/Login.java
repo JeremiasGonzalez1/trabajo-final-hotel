@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import UtilitiesFiles.DataFile;
 public class Login implements Serializable{
     private String username = "";
     private String password = "";
@@ -33,28 +33,21 @@ public class Login implements Serializable{
         this.password = password;
     }
 
-    public boolean confirmUser(Login login) {
-
-        String path = ":C//User//Desktop//login.json";
-
-        File file = new File(path);
-
+    public boolean confirmUser(Login login, String path) {
+        int i = 0;
         boolean flag = false;
 
-        try {
-            ObjectMapper mapper = new ObjectMapper();
+        List <Login> logins = new ArrayList<>();
 
-            ArrayList<Login> logins = mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(ArrayList.class, Login.class));
+        DataFile data = new DataFile();
 
-            for(Login aux : logins)
-            {
-                if(aux.equals(login))
-                {
-                    flag = true;
-                }
+        logins = data.listLogin(path);
+
+        for(Login aux : logins){
+            if (login.equals(aux)) {
+                flag = true;
+                break;
             }
-
-        } catch (IOException ignored) {
         }
 
         return flag;

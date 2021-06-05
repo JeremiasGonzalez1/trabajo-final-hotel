@@ -1,5 +1,5 @@
 package Empleados;
-
+import UtilitiesFiles.DataFile;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -74,54 +74,15 @@ public class Employee implements Serializable{
         this.sign.setUsername(this.username);
     }
 
-    public void signOut(){
-
+    public void signOut() {
         Date date = new Date();
+        DataFile data = new DataFile();
+
         this.sign.setDateOut(date);
-        String path = "sign.json";//Ubicacion del archivo
 
-        File file = new File(path);
-        try {
-            List<Sign> signs = new ArrayList<>();
-
-            ObjectMapper mapper = new ObjectMapper();
-
-            if(file.exists()){
-                signs = mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(List.class, Sign.class));
-            }
-            signs.add(this.sign);
-            mapper.writeValue(file, signs);
-
-        } catch (IOException e) {
-        }
+        data.employeeSingOut(this.sign);
 
         this.sign = null;
-    }
-
-    public List<Sign> seeSigns(){
-        String path = "sign.json";//Direccion del archivo
-        File file = new File(path);
-        List <Sign> signs = new ArrayList();
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-
-            if(file.exists()){
-                signs = mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(List.class, Sign.class));
-
-//                for(Sign aux : signs)
-//                {
-//                    if(this.username.equals(aux.getUsername())){
-//                        System.out.println(aux.toString());
-//                    }
-//                }
-            }
-
-
-        }catch (IOException e) {
-            System.out.println("No se pudo leer el archivo");
-        }
-
-        return signs;
     }
 
     public boolean loginEmpoyee() {
@@ -141,7 +102,7 @@ public class Employee implements Serializable{
             Login login = new Login(this.username, this.password);
 
 
-            if (!login.confirmUser(login)) {
+            if (!login.confirmUser(login, "employeeLogin.json")) {
                 flag = false;
 
                 System.out.println("El usuario o la contraseña son incorrectos\n");
