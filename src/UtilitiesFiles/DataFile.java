@@ -3,6 +3,8 @@ package UtilitiesFiles;
 import Interaction.Reservation;
 import Login.Login;
 import Sign.Sign;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
@@ -49,7 +51,16 @@ public class DataFile {
     }
 
 
+    public <T> void saveOnFile(List<T> list, String path){
+        ObjectMapper mapper = new ObjectMapper();
 
+        try{
+            File file = new File(path);
+            mapper.writeValue(file, list);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void employeeSingOut(Sign sign, List<Sign> signList) {
         String path = "sign.json";

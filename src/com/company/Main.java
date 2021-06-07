@@ -22,31 +22,33 @@ public class Main {
 //        client.loginAccount();
         Employee empleado = new Employee("maxi", "1234", "Tarde", 45000);
 
-//        empleado.signIn();
-//
+        empleado.signIn();
+
 //        empleado.signOut();
 
         Employee empleado2 = new Employee("pedro ", "1234", "Tarde", 45000);
 
-//        empleado2.signIn();
-//
+        empleado2.signIn();
+
 //        empleado2.signOut();
 
-        String nameFileReservation="reservations.json";
+
+
+
+//        String nameFileReservation="reservations.json";
         String nameFileSign="sign.json";
-
-        Date date1=new Date();
-        Date date2=new Date(2021, 06, 26);
-
-        Reservation reservation=new Reservation(date1, date2);
-
+//
+//        Date date1=new Date();
+//        Date date2=new Date(2021, 06, 26);
+//
+//        Reservation reservation=new Reservation(date1, date2);
+//
         DataFile dataFile=new DataFile();
-        List<Reservation>reservations=new ArrayList<>();
-
-        DataFileRoom dataFileRoom=new DataFileRoom();
+//        List<Reservation>reservations=new ArrayList<>();
+//
+//        DataFileRoom dataFileRoom=new DataFileRoom();
         List<Sign> signList=new ArrayList<>();
-        signList=dataFile.readLists(nameFileSign, Sign.class);
-
+        empleado.signOut(signList);
         System.out.println(signList.toString());
     }
 }

@@ -16,6 +16,7 @@ public class Employee implements Serializable{
     private double salary = 0;
     private Sign sign;
     private static final long serialVersionUID = 0;
+
     public Employee() {
     }
 
@@ -74,15 +75,20 @@ public class Employee implements Serializable{
         this.sign.setUsername(this.username);
     }
 
-    public void signOut() {
+    public void signOut(List<Sign> signList) {
         Date date = new Date();
         DataFile data = new DataFile();
 
         this.sign.setDateOut(date);
 
-        data.employeeSingOut(this.sign);
+        signList = data.readLists("sign.json", Sign.class);
+
+        signList.add(this.sign);
+
+        data.saveOnFile(signList, "sign.json");
 
         this.sign = null;
+
     }
 
     public boolean loginEmpoyee() {
