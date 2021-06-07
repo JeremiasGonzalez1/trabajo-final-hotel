@@ -1,23 +1,16 @@
 package rooms;
 
-public class Room {
+public class Room{
     private int numberBeds=0;
     private int id = 0;
-    private RoomStatus status;
-    private static Integer rooms=0;
+    private boolean status=true;
 
-    public enum RoomStatus {
-        DISPONIBLE,
-        OCUPADA,
-        RAPRANDOSE,
-        LIMPIANDOSE;
-    }
+    public Room(){}
 
-    public Room(int numberBeds, RoomStatus status) {
+    public Room(int numberBeds, int id, boolean status) {
         this.numberBeds = numberBeds;
         this.status = status;
-
-        rooms++;
+        this.id=id;
     }
 
     public int getNumberBeds() {
@@ -28,20 +21,38 @@ public class Room {
         this.numberBeds = numberBeds;
     }
 
-    public RoomStatus isCondition() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setCondition(RoomStatus condition) {
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public boolean isCondition() {
+        return status;
+    }
+
+    public void setCondition(boolean condition) {
         this.status = condition;
     }
 
-    public static Integer getRooms() {
-        return rooms;
+
+
+    public int getId() {
+        return id;
     }
 
-    public static void setRooms(Integer rooms) {
-        Room.rooms = rooms;
+    public void setId(int id) {
+        this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return "Room{" +
+                "numberBeds=" + numberBeds +
+                ", id=" + id +
+                ", status=" + status +
+                '}';
+    }
 }

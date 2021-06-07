@@ -41,8 +41,7 @@ public class DataFile {
         try {
             File file = new File(url);
             if (file.exists()) {
-                data = mapper.readValue(file,
-                        mapper.getTypeFactory().constructCollectionType(List.class, genericOb));
+                data = mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(List.class, genericOb));
             }
         } catch (IOException e) {
             e.printStackTrace();

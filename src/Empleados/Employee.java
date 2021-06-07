@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 import Login.Login;
 import Sign.Sign;
@@ -96,12 +97,17 @@ public class Employee implements Serializable{
         String password;
         boolean flag = true;
         int exit = 0;
-
+        Scanner scanner=new Scanner(System.in);
+        String keyInput;
         do {
             flag = true;
             exit = 0;
             System.out.println("Ingrese username");
+            keyInput=scanner.nextLine();
+            this.username=keyInput;
             System.out.println("Ingrese password");
+            keyInput=scanner.nextLine();
+            this.password=keyInput;
             System.out.println("");
             /*scanear nuevos username y password)*/
 
@@ -114,6 +120,8 @@ public class Employee implements Serializable{
                 System.out.println("El usuario o la contraseña son incorrectos\n");
                 System.out.println("Desea salir?");
 //              se scanea exit, si es 1 se quiere ir, 0 si quiere reintentar.
+                keyInput=scanner.nextLine();
+                exit=Integer.parseInt(keyInput);
             }
 
 
