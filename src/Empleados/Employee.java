@@ -64,35 +64,37 @@ public class Employee implements Login{
     }
 
 
-    public boolean loginEmpoyee(List <Employee> employeeList) {
+    @Override
+    public <T> boolean login(List<T> genericList) {
         String username;
         String password;
+        List <Employee> employeeList = (List <Employee>) genericList;
         boolean flag = true;
         int exit = 0;
-        Scanner scanner=new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         String keyInput;
         do {
             flag = true;
             exit = 0;
             System.out.println("Ingrese username");
-            keyInput=scanner.nextLine();
-            this.username=keyInput;
+            keyInput = scanner.nextLine();
+            this.username = keyInput;
             System.out.println("Ingrese password");
-            keyInput=scanner.nextLine();
-            this.password=keyInput;
+            keyInput = scanner.nextLine();
+            this.password = keyInput;
             System.out.println("");
-            if (!confirmUser(this.username, this.password,  employeeList)) {
+            if (!confirmUser(this.username, this.password, employeeList)) {
                 flag = false;
 
                 System.out.println("El usuario o la contraseña son incorrectos\n");
                 System.out.println("Desea salir?");
 //              se scanea exit, si es 1 se quiere ir, 0 si quiere reintentar.
-                keyInput=scanner.nextLine();
-                exit=Integer.parseInt(keyInput);
+                keyInput = scanner.nextLine();
+                exit = Integer.parseInt(keyInput);
             }
 
 
-        }while(!flag && exit == 0);
+        } while (!flag && exit == 0);
 
         return flag;
 

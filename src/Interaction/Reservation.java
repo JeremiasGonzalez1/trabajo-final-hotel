@@ -13,17 +13,20 @@ public class Reservation implements RoomCheck {
     private Date dateAdmission = new Date();
     private Date dateOut = new Date();
     private int numRoom = 0;
+    private String usernameClient="";
 
     public Reservation() {
         dateAdmission = null;
         dateOut = null;
         numRoom = 0;
+        usernameClient="";
     }
 
-    public Reservation(Date dateAdmission, Date dateOut) {
+    public Reservation(Date dateAdmission, Date dateOut, String usernameClient) {
         this.dateAdmission = dateAdmission;
         this.dateOut = dateOut;
         this.numRoom = 0;
+        this.usernameClient=usernameClient;
     }
 
     public Date getDateAdmission() {
@@ -74,7 +77,16 @@ public class Reservation implements RoomCheck {
         }
     }
 
-    public void dataReservation(List<Room> roomList, List<Reservation> reservationList) {
+    public String getUsernameClient() {
+        return usernameClient;
+    }
+
+    public void setUsernameClient(String usernameClient) {
+        this.usernameClient = usernameClient;
+    }
+
+    public void dataReservation(List<Room> roomList, List<Reservation> reservationList, String usernameClient) {
+        this.setUsernameClient(usernameClient);
         this.upDateIn(this);
         this.upDateOut(this);
         Scanner scanner = new Scanner(System.in);
@@ -86,7 +98,7 @@ public class Reservation implements RoomCheck {
     }
 
     //metodo para ingreso de ingreso
-    public Reservation upDateIn(Reservation dateIn) {
+    private Reservation upDateIn(Reservation dateIn) {
         Scanner scanner = new Scanner(System.in);
         String keyInput;
         System.out.println("Coloque mes de ingreso");
@@ -101,7 +113,7 @@ public class Reservation implements RoomCheck {
     }
 
     //metodo para ingresa fecha de egreso
-    public Reservation upDateOut(Reservation dateOut) {
+    private Reservation upDateOut(Reservation dateOut) {
         Scanner scanner = new Scanner(System.in);
         String keyImput;
         System.out.println("coloque mes de egreso");
