@@ -1,6 +1,10 @@
 package Sign;
+import UtilitiesFiles.DataFile;
+
 import java.util.Date;
 import java.io.*;
+import java.util.List;
+
 public class Sign implements Serializable{
 
     private String Username;
@@ -8,12 +12,6 @@ public class Sign implements Serializable{
     private Date dateOut;
 
     public Sign(){}
-
-    public Sign(String username, Date dateIn, Date dateOut) {
-        Username = username;
-        this.dateIn = dateIn;
-        this.dateOut = dateOut;
-    }
 
     public String getUsername() {
         return Username;
@@ -46,5 +44,35 @@ public class Sign implements Serializable{
                 ", dateIn=" + dateIn +
                 ", dateOut=" + dateOut +
                 '}';
+    }
+
+    public void signIn(String username){
+        Date date = new Date();
+        this.setDateIn(date);
+        this.setDateOut(null);
+        this.setUsername(username);
+    }
+
+    public void signOut(List<Sign> signList) {
+        Date date = new Date();
+        DataFile data = new DataFile();
+
+        this.setDateOut(date);
+
+        signList = data.readLists("sign.json", Sign.class);
+
+        signList.add(this);
+
+        data.saveOnFile(signList, "sign.json");
+    }
+
+    public void seeSigns(List <Sign> signsList, String username){
+
+        for(Sign sign : signsList){
+            if(sign.getUsername().equals(username)){
+                System.out.println(sign.toString());
+            }
+        }
+
     }
 }

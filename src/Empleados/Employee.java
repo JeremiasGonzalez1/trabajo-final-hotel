@@ -1,24 +1,19 @@
 package Empleados;
-import UtilitiesFiles.DataFile;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import interfaces.Login;
 
-import Login.Login;
-import Sign.Sign;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-public class Employee implements Serializable{
+public class Employee implements Login{
     private String username = "";
     private String password = "";
     private String turn = "";
-    private double salary = 0;
-    private Sign sign;
-    private static final long serialVersionUID = 0;
 
-    public Employee() {
+
+    private Boolean isAdmin = false;
+    private double salary = 0;
+
+
+    public Employee(){
     }
 
     public Employee(String username, String password, String turn, double salary) {
@@ -26,17 +21,16 @@ public class Employee implements Serializable{
         this.password = password;
         this.turn = turn;
         this.salary = salary;
-        this.sign = new Sign();
+        this.isAdmin = false;
     }
 
-    private Sign getSign() {
-        return sign;
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
     }
 
-    private void setSign(Sign sign) {
-        this.sign = sign;
+    public Boolean getAdmin() {
+        return isAdmin;
     }
-
     public double getSalary() {
         return salary;
     }
@@ -69,30 +63,8 @@ public class Employee implements Serializable{
         this.turn = turn;
     }
 
-    public void signIn(){
-        Date date = new Date();
-        this.sign.setDateIn(date);
-        this.sign.setDateOut(null);
-        this.sign.setUsername(this.username);
-    }
 
-    public void signOut(List<Sign> signList) {
-        Date date = new Date();
-        DataFile data = new DataFile();
-
-        this.sign.setDateOut(date);
-
-        signList = data.readLists("sign.json", Sign.class);
-
-        signList.add(this.sign);
-
-        data.saveOnFile(signList, "sign.json");
-
-        this.sign = null;
-
-    }
-
-    public boolean loginEmpoyee() {
+    public boolean loginEmpoyee(List <Employee> employeeList) {
         String username;
         String password;
         boolean flag = true;
@@ -109,12 +81,7 @@ public class Employee implements Serializable{
             keyInput=scanner.nextLine();
             this.password=keyInput;
             System.out.println("");
-            /*scanear nuevos username y password)*/
-
-            Login login = new Login(this.username, this.password);
-
-
-            if (!login.confirmUser(login, "employeeLogin.json")) {
+            if (!confirmUser(this.username, this.password,  employeeList)) {
                 flag = false;
 
                 System.out.println("El usuario o la contraseña son incorrectos\n");
@@ -129,5 +96,35 @@ public class Employee implements Serializable{
 
         return flag;
 
+    }
+
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", turn='" + turn + '\'' +
+                ", isAdmin=" + isAdmin +
+                ", salary=" + salary +
+                '}';
+    }
+
+    @Override
+    public <T> boolean confirmUser(String Username, String Password, List<T> genericList) {
+        boolean flag = false;
+
+        List <Employee> auxList = (List<Employee>) genericList;
+
+        for(Employee aux : auxList){
+            if(Username.equals(aux.getUsername()) && Password.equals(aux.getPassword())){
+                this.setAdmin(aux.isAdmin);
+                this.setTurn(aux.turn);
+                this.setSalary(aux.salary);
+                flag = true;
+            }
+        }
+
+        return flag;
     }
 }

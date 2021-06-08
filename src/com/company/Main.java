@@ -1,22 +1,41 @@
 package com.company;
 
+import Empleados.Admin;
 import Empleados.Employee;
-import Interaction.Client;
-import Interaction.Reservation;
-import Sign.Sign;
 import UtilitiesFiles.DataFile;
-import UtilitiesFiles.DataFileRoom;
-import Utils.ListReservations;
-import rooms.Room;
-
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
+        DataFile data = new DataFile();
+        String nameFileEmployee = "employee.json";
+        List<Employee> employeeList = new ArrayList<>();
+        Admin admin = new Admin();
+        employeeList = data.readLists(nameFileEmployee,Employee.class);
+//        admin.registerReceptionist(employeeList, nameFileEmployee);
+        Employee employee = new Employee();
+        if(employee.loginEmpoyee(employeeList)) {
+            System.out.println(employee.toString());
+            if (employee.getAdmin()) {
+                System.out.println("Soy un admin");
+            }
+        }
+//        Sign sign = new Sign();
+//        List <Sign> signList = new ArrayList<>();
+//        Employee empleado1 = new Employee("pedro ", "1234", "Mañana", 45000);
+//        sign.signIn(empleado1.getUsername());
+//
+//        sign.signOut(signList);
+//
+//        signList = data.readLists("sign.json", Sign.class);
+//
+//        System.out.println(signList.toString());
+//
+//        System.out.println("\n");
+//
+//        sign.seeSigns(signList, empleado1.getUsername());
 //        Client client=new Client();
 //        client.registration();
 //        System.out.println(client.toString());
@@ -99,18 +118,18 @@ public class Main {
 //        roomList.add(room31);
 //        roomList.add(room32);
 //        roomList.add(room33);
-        DataFile dataFile = new DataFile();
+//        DataFile dataFile = new DataFile();
+////
+////        String filenameRoom = "Rooms.json";
+////        List<Room> listaDeHabitaciones = new ArrayList<>();
+//////
+////        listaDeHabitaciones=dataFile.readLists(filenameRoom, Room.class);
+//////
+//        List<Reservation> reservationList = new ArrayList<>();
+////        Reservation reservation =new Reservation();
+////        reservation.dataReservation(listaDeHabitaciones, reservationList );
+//        reservationList = dataFile.readLists("reservas.json", Reservation.class);
 //
-//        String filenameRoom = "Rooms.json";
-//        List<Room> listaDeHabitaciones = new ArrayList<>();
-////
-//        listaDeHabitaciones=dataFile.readLists(filenameRoom, Room.class);
-////
-        List<Reservation> reservationList = new ArrayList<>();
-//        Reservation reservation =new Reservation();
-//        reservation.dataReservation(listaDeHabitaciones, reservationList );
-        reservationList = dataFile.readLists("reservas.json", Reservation.class);
-
-        System.out.println(reservationList.toString());
+//        System.out.println(reservationList.toString());
     }
 }

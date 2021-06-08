@@ -1,9 +1,8 @@
 package Interaction;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
-
-import Login.Login;
 import Interaction.Reservation;
 
 public class Client {
@@ -131,10 +130,17 @@ public class Client {
     }
 
     public void loginAccount() {
-        Login login = new Login(this.getUsername(), this.getPassword());
-        boolean x;
+        boolean x = false;
         do {
-            x = login.confirmUser(login, "clientLogin.json");
+            Scanner scanner=new Scanner(System.in);
+            String keyInput;
+            System.out.println("Ingrese username");
+            keyInput=scanner.nextLine();
+            this.username=keyInput;
+            System.out.println("Ingrese password");
+            keyInput=scanner.nextLine();
+            this.password=keyInput;
+            System.out.println("");
             if (!x) {
                 System.out.println("usuario / contraseña incorrecto");
             }

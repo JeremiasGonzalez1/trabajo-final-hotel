@@ -1,7 +1,6 @@
 package UtilitiesFiles;
 
 import Interaction.Reservation;
-import Login.Login;
 import Sign.Sign;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -17,26 +16,8 @@ public class DataFile {
     public DataFile() {
     }
 
-
-    public void saveOnFileReservation(Reservation reservation, String path) {
-        List<Reservation> reservationList = new ArrayList<>();
-
-        try {
-            File file = new File(path);
-            ObjectMapper mapper = new ObjectMapper();
-
-            if (file.exists()) {
-                reservationList = mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(List.class, Reservation.class));
-            }
-            reservationList.add(reservation);
-            mapper.writeValue(file, reservationList);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
     public <T> List<T> readLists(String url, Class<T> genericOb) {
-        List<T> data = null;
+        List<T> data = new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();
         try {
             File file = new File(url);
@@ -60,23 +41,5 @@ public class DataFile {
             e.printStackTrace();
         }
     }
-
-    public void employeeSingOut(Sign sign, List<Sign> signList) {
-        String path = "sign.json";
-        File file = new File(path);
-        List<Sign> signs = new ArrayList<>();
-
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-
-            signList.add(sign);
-
-            mapper.writeValue(file, signs);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
 }
 
