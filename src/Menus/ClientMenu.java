@@ -3,7 +3,7 @@ package Menus;
 import java.util.Scanner;
 
 public class ClientMenu {
-    private int menuChangeProfile(){
+    public int menuChangeProfile(){
         Scanner scanner =new Scanner(System.in);
         String keyInput;
         System.out.println("que campo desea modificar?");
@@ -18,7 +18,7 @@ public class ClientMenu {
         return aux;
     }
 
-    private int optionsMenu() {
+    public int optionsMenu() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("1- reservas");
         System.out.println("2- Mirar perfil");

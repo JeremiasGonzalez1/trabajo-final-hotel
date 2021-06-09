@@ -2,7 +2,7 @@ package Menus;
 
 import java.util.Scanner;
 
-public class MenuRecepcionist {
+public class ReceptionistMenu {
     public int initialRecepcionistMenu(){
         Scanner scanner = new Scanner(System.in);
         String keyInput;

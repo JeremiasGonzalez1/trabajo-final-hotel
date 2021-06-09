@@ -2,28 +2,105 @@ package com.company;
 
 import Empleados.Admin;
 import Empleados.Employee;
+import Empleados.Receptionist;
+import Interaction.Client;
+import Interaction.Reservation;
+import Menus.AdminMenu;
+import Menus.ClientMenu;
+import Menus.MainMenus;
+import Menus.ReceptionistMenu;
 import UtilitiesFiles.DataFile;
+import rooms.Room;
+import Sign.Sign;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
-        DataFile data = new DataFile();
-        String nameFileEmployee = "employee.json";
-        List<Employee> employeeList = new ArrayList<>();
-        Admin admin = new Admin();
-        employeeList = data.readLists(nameFileEmployee,Employee.class);
-//        admin.registerReceptionist(employeeList, nameFileEmployee);
+        ///VARIABLES
+        ///V.BOOLEANS
+        boolean clientBoolean = false;
+        boolean employeeBoolean = false;
+        boolean receptionistBoolean = false;
+        ///V.TIPOS DE DATOS
+        Client client = new Client();
         Employee employee = new Employee();
-        if(employee.login(employeeList)) {
-            System.out.println(employee.toString());
-            if (employee.getAdmin()) {
-                System.out.println("Soy un admin");
-            }
+        Admin admin = new Admin();
+        Receptionist receptionist = new Receptionist();
+        Sign sign = new Sign();
+        ///V.MENU
+        MainMenus mainMenus = new MainMenus();
+        ClientMenu clientMenu = new ClientMenu();
+        AdminMenu adminMenu = new AdminMenu();
+        ReceptionistMenu receptionistMenu = new ReceptionistMenu();
+        ///V.OPTIONS
+        int menuOption = 0;
+        int clientOption = 0;
+        int receptionistOption = 0;
+        ///DATAFILE
+        DataFile dataFile = new DataFile();
+        ///PATHS
+        String nameFileRoom = "Rooms.json";
+        String nameFileEmployee = "employee.json";
+        String nameFileSign = "sign.json";
+        String nameFileReservation = "reservas.json";
+        String nameFileClient ="Client.json";
+        ///LISTAS
+        List<Room> roomList = new ArrayList<>();
+        List<Employee> employeeList = new ArrayList<>();
+        List<Reservation> reservationList = new ArrayList<>();
+        List<Sign> signList = new ArrayList<>();
+        List<Client> clientList = new ArrayList<>();
+        ///CARGAR LISTAS
+        roomList = dataFile.readLists(nameFileRoom, Room.class);
+        employeeList = dataFile.readLists(nameFileEmployee, Employee.class);
+        reservationList = dataFile.readLists(nameFileReservation, Reservation.class);
+        signList = dataFile.readLists(nameFileSign, Sign.class);
+        ///SWITCH PRINCIPAL
+        menuOption = mainMenus.mainMenu();
+        switch (menuOption){
+            case 1:
+                clientBoolean = client.login(clientList);
+                if(clientBoolean){
+                    clientOption = clientMenu.optionsMenu();
+                }
+                break;
+            case 2:
+                employeeBoolean = employee.login(employeeList);
+                if(employeeBoolean){
+                    if(employee.getAdmin()){
+                        if(employee instanceof Admin){
+                            admin = (Admin) employee;
+
+                            adminMenu.optionsMenu();
+                        }
+
+                    }else
+                    {
+                        if(employee instanceof Receptionist){
+                            receptionist = (Receptionist) employee;
+                        }
+
+                        receptionistOption = receptionistMenu.initialRecepcionistMenu();
+                        switch (receptionistOption){
+                            case 1:
+                                receptionistBoolean = sign.signIn(receptionist.getUsername());
+                                if(receptionistBoolean){
+                                    receptionistMenu.principalRecepcionistMenu();
+                                }
+                                break;
+                            case 2:
+                                sign.seeSigns(signList, receptionist.getUsername());
+                                break;
+                        }
+
+                    }
+                }
         }
+
 //        Sign sign = new Sign();
-//        List <Sign> signList = new ArrayList<>();
 //        Employee empleado1 = new Employee("pedro ", "1234", "Mañana", 45000);
 //        sign.signIn(empleado1.getUsername());
 //
@@ -50,7 +127,6 @@ public class Main {
 
         // empleado2.signIn();
 
-        String nameFileSign = "sign.json";
 
 //        List<Room> roomList = new ArrayList<>();
 //
@@ -120,12 +196,7 @@ public class Main {
 //        roomList.add(room33);
 //        DataFile dataFile = new DataFile();
 ////
-////        String filenameRoom = "Rooms.json";
-////        List<Room> listaDeHabitaciones = new ArrayList<>();
 //////
-////        listaDeHabitaciones=dataFile.readLists(filenameRoom, Room.class);
-//////
-//        List<Reservation> reservationList = new ArrayList<>();
 ////        Reservation reservation =new Reservation();
 ////        reservation.dataReservation(listaDeHabitaciones, reservationList );
 //        reservationList = dataFile.readLists("reservas.json", Reservation.class);
