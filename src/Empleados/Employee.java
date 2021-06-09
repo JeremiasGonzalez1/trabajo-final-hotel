@@ -1,5 +1,6 @@
 package Empleados;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 import interfaces.Login;
 
@@ -128,5 +129,18 @@ public class Employee implements Login{
         }
 
         return flag;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return Double.compare(employee.salary, salary) == 0 && Objects.equals(username, employee.username) && Objects.equals(password, employee.password) && Objects.equals(turn, employee.turn) && Objects.equals(isAdmin, employee.isAdmin);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, password, turn, isAdmin, salary);
     }
 }

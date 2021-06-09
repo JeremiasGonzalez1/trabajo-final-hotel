@@ -16,7 +16,7 @@ public class Main {
         employeeList = data.readLists(nameFileEmployee,Employee.class);
 //        admin.registerReceptionist(employeeList, nameFileEmployee);
         Employee employee = new Employee();
-        if(employee.loginEmpoyee(employeeList)) {
+        if(employee.login(employeeList)) {
             System.out.println(employee.toString());
             if (employee.getAdmin()) {
                 System.out.println("Soy un admin");
