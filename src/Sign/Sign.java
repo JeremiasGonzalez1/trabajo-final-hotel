@@ -46,11 +46,12 @@ public class Sign implements Serializable{
                 '}';
     }
 
-    public void signIn(String username){
+    public boolean signIn(String username){
         Date date = new Date();
         this.setDateIn(date);
         this.setDateOut(null);
         this.setUsername(username);
+        return true;
     }
 
     public void signOut(List<Sign> signList) {

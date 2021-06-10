@@ -30,6 +30,7 @@ public class Main {
         Admin admin = new Admin();
         Receptionist receptionist = new Receptionist();
         Sign sign = new Sign();
+        Reservation reservation=new Reservation();
         ///V.MENU
         MainMenus mainMenus = new MainMenus();
         ClientMenu clientMenu = new ClientMenu();
@@ -58,47 +59,50 @@ public class Main {
         employeeList = dataFile.readLists(nameFileEmployee, Employee.class);
         reservationList = dataFile.readLists(nameFileReservation, Reservation.class);
         signList = dataFile.readLists(nameFileSign, Sign.class);
+
+        reservation.dataReservation(roomList,reservationList, "pepe");
+
         ///SWITCH PRINCIPAL
-        menuOption = mainMenus.mainMenu();
-        switch (menuOption){
-            case 1:
-                clientBoolean = client.login(clientList);
-                if(clientBoolean){
-                    clientOption = clientMenu.optionsMenu();
-                }
-                break;
-            case 2:
-                employeeBoolean = employee.login(employeeList);
-                if(employeeBoolean){
-                    if(employee.getAdmin()){
-                        if(employee instanceof Admin){
-                            admin = (Admin) employee;
-
-                            adminMenu.optionsMenu();
-                        }
-
-                    }else
-                    {
-                        if(employee instanceof Receptionist){
-                            receptionist = (Receptionist) employee;
-                        }
-
-                        receptionistOption = receptionistMenu.initialRecepcionistMenu();
-                        switch (receptionistOption){
-                            case 1:
-                                receptionistBoolean = sign.signIn(receptionist.getUsername());
-                                if(receptionistBoolean){
-                                    receptionistMenu.principalRecepcionistMenu();
-                                }
-                                break;
-                            case 2:
-                                sign.seeSigns(signList, receptionist.getUsername());
-                                break;
-                        }
-
-                    }
-                }
-        }
+//        menuOption = mainMenus.mainMenu();
+//        switch (menuOption){
+//            case 1:
+//                clientBoolean = client.login(clientList);
+//                if(clientBoolean){
+//                    clientOption = clientMenu.optionsMenu();
+//                }
+//                break;
+//            case 2:
+//                employeeBoolean = employee.login(employeeList);
+//                if(employeeBoolean){
+//                    if(employee.getAdmin()){
+//                        if(employee instanceof Admin){
+//                            admin = (Admin) employee;
+//
+//                            adminMenu.optionsMenu();
+//                        }
+//
+//                    }else
+//                    {
+//                        if(employee instanceof Receptionist){
+//                            receptionist = (Receptionist) employee;
+//                        }
+//
+//                        receptionistOption = receptionistMenu.initialRecepcionistMenu();
+//                        switch (receptionistOption){
+//                            case 1:
+//                                receptionistBoolean = sign.signIn(receptionist.getUsername());
+//                                if(receptionistBoolean){
+//                                    receptionistMenu.principalRecepcionistMenu();
+//                                }
+//                                break;
+//                            case 2:
+//                                sign.seeSigns(signList, receptionist.getUsername());
+//                                break;
+//                        }
+//
+//                    }
+//                }
+//        }
 
 //        Sign sign = new Sign();
 //        Employee empleado1 = new Employee("pedro ", "1234", "Mañana", 45000);
