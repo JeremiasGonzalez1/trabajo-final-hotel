@@ -3,14 +3,13 @@ package rooms;
 public class Room{
     private int numberBeds=0;
     private int id = 0;
-    private boolean status=true;
-
+    private RoomStatus roomStatus;
     public Room(){}
 
-    public Room(int numberBeds, int id, boolean status) {
+    public Room(int numberBeds, int id) {
         this.numberBeds = numberBeds;
-        this.status = status;
         this.id=id;
+        this.roomStatus=RoomStatus.DISPONIBLE;
     }
 
     public int getNumberBeds() {
@@ -21,23 +20,14 @@ public class Room{
         this.numberBeds = numberBeds;
     }
 
-    public Boolean getStatus() {
-        return status;
+
+    public RoomStatus getRoomStatus() {
+        return roomStatus;
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setRoomStatus(RoomStatus roomStatus) {
+        this.roomStatus = roomStatus;
     }
-
-    public boolean isCondition() {
-        return status;
-    }
-
-    public void setCondition(boolean condition) {
-        this.status = condition;
-    }
-
-
 
     public int getId() {
         return id;
@@ -52,7 +42,7 @@ public class Room{
         return "Room{" +
                 "numberBeds=" + numberBeds +
                 ", id=" + id +
-                ", status=" + status +
-                '}';
+                ", status=" + roomStatus +
+                '}' + "\n" ;
     }
 }

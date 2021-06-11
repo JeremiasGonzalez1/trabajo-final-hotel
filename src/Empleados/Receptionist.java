@@ -5,6 +5,7 @@ import Interaction.Client;
 import Interaction.Reservation;
 import UtilitiesFiles.DataFile;
 import rooms.Room;
+import rooms.RoomStatus;
 
 import java.util.Date;
 import java.util.List;
@@ -33,7 +34,7 @@ public class Receptionist extends Employee {
             int index = 0;
             for (Room room : roomList) {
                 if (check.getIdRoom() == room.getId()) {
-                    room.setStatus(false);
+                    room.setRoomStatus(RoomStatus.OCUPADA);
                     roomList.set(index, room);
                 }
                 index++;

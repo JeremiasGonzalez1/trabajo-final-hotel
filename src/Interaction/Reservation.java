@@ -3,6 +3,7 @@ package Interaction;
 import UtilitiesFiles.DataFile;
 import interfaces.RoomCheck;
 import rooms.Room;
+import rooms.RoomStatus;
 
 import java.io.File;
 import java.util.*;
@@ -86,7 +87,10 @@ public class Reservation implements RoomCheck {
                 }
             }
         }
+
+        if(theBestListOfBedsRevolutionsDefinitive.size()!=0)
         bedsList=theBestListOfBedsRevolutionsDefinitive;
+
         if (reservationsAux.size() != 0) {
 
             for (Reservation reservation : reservationsAux) {
@@ -94,7 +98,7 @@ public class Reservation implements RoomCheck {
                     for (Room room : bedsList) {
                         if (reservation.getNumRoom() == room.getId()) {
                             roomsRealDefinitiveDispobleSSJ4.add(room);
-                        } else if (reservation.getNumRoom() != room.getId() && room.getStatus()) {
+                        } else if (reservation.getNumRoom() != room.getId() && room.getRoomStatus().equals(RoomStatus.DISPONIBLE)) {
                             roomsRealDefinitiveDispobleSSJ4.add(room);
                         }
                     }
@@ -103,8 +107,6 @@ public class Reservation implements RoomCheck {
         } else {
             roomsRealDefinitiveDispobleSSJ4 = bedsList;
         }
-
-
         Scanner scanner = new Scanner(System.in);
         String keyInput;
         System.out.println("DESEA RESERVAR? \n" +
@@ -125,7 +127,7 @@ public class Reservation implements RoomCheck {
         this.upDateOut();
         Scanner scanner = new Scanner(System.in);
         String keyInput;
-        System.out.println("ingrese el numero de camas que esta buscando ");
+        System.out.println("CUANTAS CAMAS BUSCA?");
         keyInput = scanner.nextLine();
         int beds = Integer.parseInt(keyInput);
         System.out.println(this.toString());
@@ -136,10 +138,10 @@ public class Reservation implements RoomCheck {
     private void upDateIn() {
         Scanner scanner = new Scanner(System.in);
         String keyInput;
-        System.out.println("Coloque mes de ingreso");
+        System.out.println("COLOQUE MES DE INGRESO");
         keyInput = scanner.nextLine();
         int mont = Integer.parseInt(keyInput);
-        System.out.println("coloque dia de ingreso");
+        System.out.println("COLOQUE DIA DE INGRESO");
         keyInput = scanner.nextLine();
         int day = Integer.parseInt(keyInput);
         Date date = new Date(2021, mont, day);
@@ -150,10 +152,10 @@ public class Reservation implements RoomCheck {
     public void upDateOut() {
         Scanner scanner = new Scanner(System.in);
         String keyImput;
-        System.out.println("coloque mes de egreso");
+        System.out.println("COLOQUE MES DE EGRESO");
         keyImput = scanner.nextLine();
         int mont = Integer.parseInt(keyImput);
-        System.out.println("coloque dia de egreso");
+        System.out.println("COLOQUE DIA DE EGRESO");
         keyImput = scanner.nextLine();
         int day = Integer.parseInt(keyImput);
         Date date = new Date(2021, mont, day);

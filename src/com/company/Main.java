@@ -12,6 +12,7 @@ import Menus.ReceptionistMenu;
 import UtilitiesFiles.DataFile;
 import rooms.Room;
 import Sign.Sign;
+import rooms.RoomStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +62,7 @@ public class Main {
         signList = dataFile.readLists(nameFileSign, Sign.class);
 
         reservation.dataReservation(roomList,reservationList, "pepe");
+        System.out.println(reservationList.toString());
 
         ///SWITCH PRINCIPAL
 //        menuOption = mainMenus.mainMenu();
@@ -131,41 +133,40 @@ public class Main {
 
         // empleado2.signIn();
 
-
+//String pathDeprueba="Rooms.json";
 //        List<Room> roomList = new ArrayList<>();
 //
-//        Room room2 = new Room(2,1,true);
-//        Room room3 = new Room(1,2,true);
-//        Room room4 = new Room(3,3,true);
-//        Room room5 = new Room(2,4,true);
-//        Room room6 = new Room(1,5,true);
-//        Room room7 = new Room(3,6,true);
-//        Room room8 = new Room(2,7,true);
-//        Room room9 = new Room(1,8,true);
-//        Room room10 = new Room(3,9,true);
-//        Room room11 = new Room(2,10,true);
-//        Room room12 = new Room(1, 11,true);
-//        Room room13 = new Room(3,12,true);
-//        Room room14 = new Room(2, 13,true);
-//        Room room16 = new Room(1, 15,true);
-//        Room room17 = new Room(3, 16,true);
-//        Room room18 = new Room(2, 17,true);
-//        Room room19 = new Room(1,  18,true);
-//        Room room20 = new Room(3, 19,true);
-//        Room room21 = new Room(2, 20,true);
-//        Room room22 = new Room(1, 21,true);
-//        Room room23 = new Room(3, 22,true);
-//        Room room24 = new Room(2, 23,true);
-//        Room room25 = new Room(1, 24,true);
-//        Room room26 = new Room(3, 25,true);
-//        Room room27 = new Room(2, 26,true);
-//        Room room28 = new Room(1, 27,true);
-//        Room room29 = new Room(3, 28,true);
-//        Room room30 = new Room(2, 29,true);
-//        Room room31 = new Room(1, 30,true);
-//        Room room32 = new Room(3,31,true);
-//        Room room33 = new Room(2, 32,true);
-//
+//        Room room2 = new Room(2,1);
+//        Room room3 = new Room(1,2);
+//        Room room4 = new Room(3,3);
+//        Room room5 = new Room(2,4);
+//        Room room6 = new Room(1,5);
+//        Room room7 = new Room(3,6);
+//        Room room8 = new Room(2,7);
+//        Room room9 = new Room(1,8);
+//        Room room10 = new Room(3,9);
+//        Room room11 = new Room(2,10);
+//        Room room12 = new Room(1, 11);
+//        Room room13 = new Room(3,12);
+//        Room room14 = new Room(2, 13);
+//        Room room16 = new Room(1, 15);
+//        Room room17 = new Room(3, 16);
+//        Room room18 = new Room(2, 17);
+//        Room room19 = new Room(1,  18);
+//        Room room20 = new Room(3, 19);
+//        Room room21 = new Room(2, 20);
+//        Room room22 = new Room(1, 21);
+//        Room room23 = new Room(3, 22);
+//        Room room24 = new Room(2, 23);
+//        Room room25 = new Room(1, 24);
+//        Room room26 = new Room(3, 25);
+//        Room room27 = new Room(2, 26);
+//        Room room28 = new Room(1, 27);
+//        Room room29 = new Room(3, 28);
+//        Room room30 = new Room(2, 29);
+//        Room room31 = new Room(1, 30);
+//        Room room32 = new Room(3,31);
+//        Room room33 = new Room(2, 32);
 //
 //        roomList.add(room2);
 //        roomList.add(room3);
@@ -199,12 +200,13 @@ public class Main {
 //        roomList.add(room32);
 //        roomList.add(room33);
 //        DataFile dataFile = new DataFile();
+////        dataFile.saveOnFile(roomList, pathDeprueba);
+//        List<Room>listaPrueba=new ArrayList<>();
+//        listaPrueba=dataFile.readLists(pathDeprueba, Room.class);
+//        System.out.println(listaPrueba.toString());
+
 ////
 //////
-////        Reservation reservation =new Reservation();
-////        reservation.dataReservation(listaDeHabitaciones, reservationList );
-//        reservationList = dataFile.readLists("reservas.json", Reservation.class);
-//
-//        System.out.println(reservationList.toString());
+
     }
 }
