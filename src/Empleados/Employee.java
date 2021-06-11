@@ -8,8 +8,6 @@ public class Employee implements Login{
     private String username = "";
     private String password = "";
     private String turn = "";
-
-
     private Boolean isAdmin = false;
     private double salary = 0;
 
