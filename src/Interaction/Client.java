@@ -18,18 +18,28 @@ public class Client implements Login {
     private String password = "";
     private String id = "";
     private boolean reservation = false;
+    private boolean active = false;
 
     public Client() {
     }
 
-    public Client(String name, String phone, String adress, String username, String password, String id, boolean reservation) {
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public Client(String name, String phone, String adress, String username, String password, String id) {
         this.name = name;
         this.phone = phone;
         this.adress = adress;
         this.username = username;
         this.password = password;
         this.id = id;
-        this.reservation = reservation;
+        this.reservation = false;
+        this.active = false;
     }
 
     public String getName() {
@@ -88,38 +98,6 @@ public class Client implements Login {
         this.reservation = reservation;
     }
 
-    public void registration() {
-
-        String keyboardInput = "";
-        System.out.println("ingrese su nombre: ");
-        Scanner scanner = new Scanner(System.in);
-        keyboardInput = scanner.nextLine();
-        this.name = keyboardInput;
-
-        System.out.println("ingrese su telefono: ");
-        keyboardInput = scanner.nextLine();
-        this.phone = keyboardInput;
-
-        System.out.println("ingrese su direccion: ");
-        keyboardInput = scanner.nextLine();
-        this.adress = keyboardInput;
-
-        System.out.println("ingrese usuario: ");
-        keyboardInput = scanner.nextLine();
-        this.username = keyboardInput;
-
-        System.out.println("ingrese su contraseña: ");
-        keyboardInput = scanner.nextLine();
-        this.password = keyboardInput;
-
-        System.out.println("ingrese su DNI: ");
-        keyboardInput = scanner.nextLine();
-        this.id = keyboardInput;
-
-        this.reservation = false;
-
-        //*falta llamado a la funcion para almacenar en el archivo*
-    }
 
     @Override
     public String toString() {
@@ -257,17 +235,21 @@ public class Client implements Login {
             keyInput = scanner.nextLine();
             this.password = keyInput;
             System.out.println("");
-            if (!confirmUser(this.username, this.password, clientList)) {
-                flag = false;
+            if(!this.isActive()) {
+                if (!confirmUser(this.username, this.password, clientList)) {
+                    flag = false;
 
-                System.out.println("El usuario o la contraseña son incorrectos\n");
-                System.out.println("Desea salir?");
+                    System.out.println("El usuario o la contraseña son incorrectos\n");
+                    System.out.println("Desea salir?");
 //              se scanea exit, si es 1 se quiere ir, 0 si quiere reintentar.
-                keyInput = scanner.nextLine();
-                exit = Integer.parseInt(keyInput);
+                    keyInput = scanner.nextLine();
+                    exit = Integer.parseInt(keyInput);
+                }
+            }else
+            {
+                System.out.println("SU USUARIO NO ESTÁ ACTIVO, ESPERE A UN ADMINISTRADOR PARA DAR DE ALTA");
             }
-
-        } while (!flag && exit == 0);
+        } while (!flag && exit == 0 && this.isActive());
 
         return flag;
 

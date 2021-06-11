@@ -61,6 +61,15 @@ public class ClientMenu {
                 keyInput = scanner.nextLine();
                 client.setId(keyInput);
                 break;
+            case 7:
+                System.out.println("SEGURO QUE QUIERE DAR DE BAJA SU CUENTA?");
+                System.out.println("1 - SI");
+                System.out.println("0 - NO");
+                keyInput = scanner.nextLine();
+                if(keyInput.equals("1")){
+                    client.setActive(false);
+                }
+                break;
         }
 
         return client;
@@ -80,35 +89,38 @@ public class ClientMenu {
         return option;
     }
 
-    public void switchOptionsMenu(int option, Client client, List<Reservation> reservationList, List<Room> roomList, List <Client> clientList, String path){
+    public void switchOptionsMenu(Client client, List<Reservation> reservationList, List<Room> roomList, List <Client> clientList, String path){
         int i = clientList.indexOf(client);
         Scanner scanner = new Scanner(System.in);
         String keyInput;
         Reservation reservation = new Reservation();
         DataFile dataFile = new DataFile();
-        int optionAux = 0;
-        switch(option){
-            case 1:
-                reservation.dataReservation(roomList, reservationList, client.getUsername());
-                break;
-            case 2:
-                System.out.println(client.toString());
-                break;
-            case 3:
-                optionAux = menuChangeProfile();
-                if(optionAux == 1){
-                    System.out.println("SU PERFIL SIN CAMBIOS : "+ client.toString());
-                    client = switchMenuChangeProfile(optionAux, client);
-                    System.out.println("SU PERFIL CON CAMBIOS : " + client.toString());
-                    System.out.println("DESEA APLICAR LOS CAMBIOS?");
-                    System.out.println("1 - SI");
-                    System.out.println("0 - NO");
-                    keyInput = scanner.nextLine();
-                    if(keyInput.equals("1")){
-                        clientList.set(i, client);
-                        dataFile.saveOnFile(clientList, path);
+        int optionAux = 0, option = 0;
+        do {
+            option = optionsMenu();
+            switch (option) {
+                case 1:
+                    reservation.dataReservation(roomList, reservationList, client.getUsername());
+                    break;
+                case 2:
+                    System.out.println(client.toString());
+                    break;
+                case 3:
+                    optionAux = menuChangeProfile();
+                    if (optionAux < 8) {
+                        System.out.println("SU PERFIL SIN CAMBIOS : " + client.toString());
+                        client = switchMenuChangeProfile(optionAux, client);
+                        System.out.println("SU PERFIL CON CAMBIOS : " + client.toString());
+                        System.out.println("DESEA APLICAR LOS CAMBIOS?");
+                        System.out.println("1 - SI");
+                        System.out.println("0 - NO");
+                        keyInput = scanner.nextLine();
+                        if (keyInput.equals("1")) {
+                            clientList.set(i, client);
+                            dataFile.saveOnFile(clientList, path);
+                        }
                     }
-                }
-        }
+            }
+        }while(optionAux!= 7 && option != 0);
     }
 }

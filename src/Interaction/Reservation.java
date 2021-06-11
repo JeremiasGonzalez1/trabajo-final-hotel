@@ -65,6 +65,7 @@ public class Reservation implements RoomCheck {
     @Override
     public void consultaHabitacion(int numberBed, Date in, Date out, List<Room> roomList, List<Reservation> reservationList) {
 
+        List<Room> theBestListOfBedsRevolutionsDefinitive = new ArrayList<>();
         List<Room> bedsList = new ArrayList<>();
         for (Room room : roomList) {
             ///bajo todas las habitaciones que tienen la misma cantidad de camas a un nuevo arreglo
@@ -73,40 +74,27 @@ public class Reservation implements RoomCheck {
             }
         }
 
-        List<Room> roomsRealDefinitiveDispobleSSJ4 = new ArrayList<>();
-        List<Reservation> reservationsAux = new ArrayList<>();
-        List<Room>theBestListOfBedsRevolutionsDefinitive=new ArrayList<>();
-        for (Reservation reservationAux : reservationList) {
-            if ((out.compareTo(reservationAux.getDateAdmission())) < 0) {
-                reservationsAux.add(reservationAux);
-            } else {
-                for (Room aux : bedsList) {
-                    if (reservationAux.getNumRoom() != aux.getId()) {
-                        theBestListOfBedsRevolutionsDefinitive.add(aux);
+        for (Reservation rAux : reservationList) {
+            if ((out.compareTo(rAux.getDateAdmission())>=0 && out.compareTo(rAux.getDateOut())<= 0) || in.compareTo(rAux.getDateAdmission())>=0 && in.compareTo(rAux.getDateOut())<=0) {
+               ///En este if compara si la fecha de salida o la de entrada chocan con las de las reservas
+                for (Room room : bedsList) {
+                    ///Si entra en el if anterior, lo que tenemos que buscar es la habitacion ocupada.
+                    if (room.getId() == rAux.getNumRoom()) {
+                        ///Como nos manejamos con la lista de camas, solamente sacamos las camas que estan ocupadas esos dias
+                        ///Pero para no quitar directamente, ya que estamos dentro de un for each y podría romper
+                        ///Cargamos las habitaciones ocupadas dentro de una lista auxiliar "TheBestListOf... esa"
+                        theBestListOfBedsRevolutionsDefinitive.add(room);
                     }
                 }
             }
         }
 
-        if(theBestListOfBedsRevolutionsDefinitive.size()!=0)
-        bedsList=theBestListOfBedsRevolutionsDefinitive;
-
-        if (reservationsAux.size() != 0) {
-
-            for (Reservation reservation : reservationsAux) {
-                if ((in.compareTo(reservation.getDateOut())) > 0) {
-                    for (Room room : bedsList) {
-                        if (reservation.getNumRoom() == room.getId()) {
-                            roomsRealDefinitiveDispobleSSJ4.add(room);
-                        } else if (reservation.getNumRoom() != room.getId() && room.getRoomStatus().equals(RoomStatus.DISPONIBLE)) {
-                            roomsRealDefinitiveDispobleSSJ4.add(room);
-                        }
-                    }
-                }
-            }
-        } else {
-            roomsRealDefinitiveDispobleSSJ4 = bedsList;
+        ///Al tener la lista auxiliar cargada con datos de camas ocupadas
+        ///Ahora si ya las podemos borrar de la lista que vamos a seguir utiliziando "bedsList"
+        for (Room aux : theBestListOfBedsRevolutionsDefinitive) {
+            bedsList.remove(aux);
         }
+
         Scanner scanner = new Scanner(System.in);
         String keyInput;
         System.out.println("DESEA RESERVAR? \n" +
@@ -116,8 +104,8 @@ public class Reservation implements RoomCheck {
         int dato = Integer.parseInt(keyInput);
         if (dato == 1)///Si el scan es true
         {
-            System.out.println(roomsRealDefinitiveDispobleSSJ4.toString());
-            this.selectRoom(roomsRealDefinitiveDispobleSSJ4, in, out, reservationList);
+            System.out.println(bedsList.toString());
+            this.selectRoom(bedsList, in, out, reservationList);
         }
     }
 

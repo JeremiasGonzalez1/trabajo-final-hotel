@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-public class Receptionist extends Employee {
+public  class Receptionist extends Employee {
 
     public Receptionist() {
     }
@@ -59,7 +59,7 @@ public class Receptionist extends Employee {
     }
 
 
-    private Client searchClient(List<Client> clientList) {
+    protected Client searchClient(List<Client> clientList) {
         Scanner scanner = new Scanner(System.in);
         String usernameClient;
         Client client = new Client();
@@ -69,7 +69,7 @@ public class Receptionist extends Employee {
             System.out.println("INGRESE USUARIO DEL CLIENTE");
             usernameClient = scanner.nextLine();
             for (Client aux : clientList) {
-                if (aux.getUsername() == usernameClient) {
+                if (aux.getUsername().equals(usernameClient)) {
                     flag = 1;
                     client = aux;
                 }

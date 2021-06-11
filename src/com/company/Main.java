@@ -20,49 +20,51 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        ///VARIABLES
-        ///V.BOOLEANS
-        boolean clientBoolean = false;
-        boolean employeeBoolean = false;
-        boolean receptionistBoolean = false;
-        ///V.TIPOS DE DATOS
-        Client client = new Client();
-        Employee employee = new Employee();
-        Admin admin = new Admin();
-        Receptionist receptionist = new Receptionist();
-        Sign sign = new Sign();
-        Reservation reservation=new Reservation();
-        ///V.MENU
+//        ///VARIABLES
+//        ///V.BOOLEANS
+//        boolean clientBoolean = false;
+//        boolean employeeBoolean = false;
+//        boolean receptionistBoolean = false;
+//        ///V.TIPOS DE DATOS
+//        Client client = new Client();
+//        Employee employee = new Employee();
+//        Admin admin = new Admin();
+//        Receptionist receptionist = new Receptionist();
+//        Sign sign = new Sign();
+//        Reservation reservation=new Reservation();
+//        ///V.MENU
         MainMenus mainMenus = new MainMenus();
-        ClientMenu clientMenu = new ClientMenu();
-        AdminMenu adminMenu = new AdminMenu();
-        ReceptionistMenu receptionistMenu = new ReceptionistMenu();
-        ///V.OPTIONS
-        int menuOption = 0;
-        int clientOption = 0;
-        int receptionistOption = 0;
-        ///DATAFILE
-        DataFile dataFile = new DataFile();
-        ///PATHS
-        String nameFileRoom = "Rooms.json";
-        String nameFileEmployee = "employee.json";
-        String nameFileSign = "sign.json";
-        String nameFileReservation = "reservas.json";
-        String nameFileClient ="Client.json";
-        ///LISTAS
-        List<Room> roomList = new ArrayList<>();
-        List<Employee> employeeList = new ArrayList<>();
-        List<Reservation> reservationList = new ArrayList<>();
-        List<Sign> signList = new ArrayList<>();
-        List<Client> clientList = new ArrayList<>();
-        ///CARGAR LISTAS
-        roomList = dataFile.readLists(nameFileRoom, Room.class);
-        employeeList = dataFile.readLists(nameFileEmployee, Employee.class);
-        reservationList = dataFile.readLists(nameFileReservation, Reservation.class);
-        signList = dataFile.readLists(nameFileSign, Sign.class);
+//        ClientMenu clientMenu = new ClientMenu();
+//        AdminMenu adminMenu = new AdminMenu();
+//        ReceptionistMenu receptionistMenu = new ReceptionistMenu();
+//        ///V.OPTIONS
+//        int menuOption = 0;
+//        int clientOption = 0;
+//        int receptionistOption = 0;
+//        ///DATAFILE
+//        DataFile dataFile = new DataFile();
+//        ///PATHS
+//        String nameFileRoom = "Rooms.json";
+//        String nameFileEmployee = "employee.json";
+//        String nameFileSign = "sign.json";
+//        String nameFileReservation = "reservas.json";
+//        String nameFileClient ="Client.json";
+//        ///LISTAS
+//        List<Room> roomList = new ArrayList<>();
+//        List<Employee> employeeList = new ArrayList<>();
+//        List<Reservation> reservationList = new ArrayList<>();
+//        List<Sign> signList = new ArrayList<>();
+//        List<Client> clientList = new ArrayList<>();
+//        ///CARGAR LISTAS
+//        roomList = dataFile.readLists(nameFileRoom, Room.class);
+//        employeeList = dataFile.readLists(nameFileEmployee, Employee.class);
+//        reservationList = dataFile.readLists(nameFileReservation, Reservation.class);
+//        signList = dataFile.readLists(nameFileSign, Sign.class);
+//
+//        reservation.dataReservation(roomList,reservationList, "pepe");
+//        System.out.println(reservationList.toString());
 
-        reservation.dataReservation(roomList,reservationList, "pepe");
-        System.out.println(reservationList.toString());
+        mainMenus.switchMainMenu();
 
         ///SWITCH PRINCIPAL
 //        menuOption = mainMenus.mainMenu();

@@ -27,7 +27,8 @@ public class MainMenus {
         return option;
     }
 
-    public void switchMainMenu(int option) {
+    public void switchMainMenu() {
+        int generalOption = mainMenu();
         ///VARIABLES
         ///V.BOOLEANS
         boolean clientBoolean = false;
@@ -70,69 +71,30 @@ public class MainMenus {
         reservationList = dataFile.readLists(nameFileReservation, Reservation.class);
         signList = dataFile.readLists(nameFileSign, Sign.class);
 
-        switch (option) {
+        switch (generalOption) {
             case 1:
                 clientBoolean = client.login(clientList);
                 if (clientBoolean) {
-                    clientOption = clientMenu.optionsMenu();
-                    clientMenu.switchOptionsMenu(clientOption, client, reservationList, roomList, clientList, nameFileClient);
+                    clientMenu.switchOptionsMenu(client, reservationList, roomList, clientList, nameFileClient);
                 }
                 break;
             case 2:
                 employeeBoolean = employee.login(employeeList);
                 if (employeeBoolean) {
                     if (employee.getAdmin()) {
-                        if (employee instanceof Admin) {
-                            admin = (Admin) employee;
-                            adminOption = adminMenu.optionsMenu();
-
-                        }
+                            admin = new Admin(employee);
+                            adminMenu.switchOptionMenuAdmin(admin, clientList, reservationList, employeeList, roomList, nameFileClient, nameFileReservation, nameFileRoom, nameFileEmployee);
 
                     } else {
                         if (employee instanceof Receptionist) {
                             receptionist = (Receptionist) employee;
+                            System.out.println("sdsdsds");
 
                         }
                     }
                 }
+                break;
 
-//        menuOption = mainMenus.mainMenu();
-//        switch (menuOption){
-//            case 1:
-//                clientBoolean = client.login(clientList);
-//                if(clientBoolean){
-//                    clientOption = clientMenu.optionsMenu();
-//                }
-//                break;
-//            case 2:
-//                employeeBoolean = employee.login(employeeList);
-//                if(employeeBoolean){
-//                    if(employee.getAdmin()){
-//                        if(employee instanceof Admin){
-//                            admin = (Admin) employee;
-//
-//                            adminMenu.optionsMenu();
-//                        }
-//
-//                    }else
-//                    {
-//                        if(employee instanceof Receptionist){
-//                            receptionist = (Receptionist) employee;
-//                        }
-//
-//                        receptionistOption = receptionistMenu.initialRecepcionistMenu();
-//                        switch (receptionistOption){
-//                            case 1:
-//                                receptionistBoolean = sign.signIn(receptionist.getUsername());
-//                                if(receptionistBoolean){
-//                                    receptionistMenu.principalRecepcionistMenu();
-//                                }
-//                                break;
-//                            case 2:
-//                                sign.seeSigns(signList, receptionist.getUsername());
-//                                break;
-//                        }
-
-                    }
-                }
         }
+    }
+}
