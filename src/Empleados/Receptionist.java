@@ -19,6 +19,13 @@ public  class Receptionist extends Employee {
     public Receptionist(String username, String password, String turn, double salary) {
         super(username, password, turn, salary);
     }
+    public Receptionist(Employee padre){
+        this.setAdmin(padre.getAdmin());
+        this.setPassword(padre.getPassword());
+        this.setSalary(padre.getSalary());
+        this.setUsername(padre.getUsername());
+        this.setTurn(padre.getTurn());
+    }
 
     public void createCheckOnReservation(List<Reservation> reservationList, List<Client> clientList, List<Room> roomList, List<Check> checkList, String username, String checkPath, String roomPath) {
         Check check = new Check();
@@ -26,7 +33,7 @@ public  class Receptionist extends Employee {
             if (client.getUsername() == username) {
                 check.setClient(client);
                 Date date = new Date();
-                check.setDate(date);
+                check.setDateIn(date);
             }
         }
 

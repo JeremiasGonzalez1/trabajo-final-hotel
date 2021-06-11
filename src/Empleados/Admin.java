@@ -66,6 +66,7 @@ public class Admin extends Receptionist {
     public void modifyClient(List<Client> clientList, List<Reservation> reservationList, String path) {
         Scanner scanner = new Scanner(System.in);
         String keyInput;
+        DataFile dataFile=new DataFile();
         Client client = null;
         int sizeList = clientList.size();
         int i = 0, option = 0;
@@ -85,10 +86,7 @@ public class Admin extends Receptionist {
 
             if (flag) {
                 i--;
-                option = menu.changeDataClient();
-
                 menu.switchChangeDataClient(client,reservationList, clientList, path);
-
                 System.out.println("CLIENTE SIN CAMBIOS : " + clientList.get(i).toString());
                 System.out.println("CLIENTE CON CAMBIOS : " + client.toString());
                 System.out.println("DESEA APLICAR LOS CAMIOS?");
@@ -97,6 +95,7 @@ public class Admin extends Receptionist {
                 keyInput = scanner.nextLine();
                 if (keyInput.equals("1")) {
                     clientList.set(i, client);
+                    dataFile.saveOnFile(clientList,path);
                 }
             } else {
                 System.out.println("EL CLIENTE NO SE ENCONTRÓ");
@@ -133,9 +132,9 @@ public class Admin extends Receptionist {
             }
 
             if (flag) {
+                i--;
                 option = menu.changeDataEmployee();
                 employee = menu.switchChangeDataEmployee(option, employee);
-                System.out.println("EMPLEADO SIN CAMBIOS : " + employeeList.get(i--).toString());
                 System.out.println("EMPLEADO CON CAMBIOS : " + employee.toString());
                 System.out.println("DESEA APLICAR LOS CAMBIOS?");
                 System.out.println("1 - SI");
@@ -201,6 +200,7 @@ public class Admin extends Receptionist {
         if(!keyInput.equals("0")) {
             while (i < size) {
                 clientList.get(i).setActive(option);
+                i++;
             }
             dataFile.saveOnFile(clientList, path);
         }
@@ -249,7 +249,7 @@ public class Admin extends Receptionist {
         System.out.println("INGRESE CONTRASEÑA");
         client.setPassword(scanner.nextLine());
         System.out.println("INGRESE DNI");
-        client.setPassword(scanner.nextLine());
+        client.setId(scanner.nextLine());
         System.out.println("DESEA ACTIVAR AHORA AL USUARIO?");
         System.out.println("1 - SI");
         System.out.println("2 - NO");
@@ -257,7 +257,6 @@ public class Admin extends Receptionist {
         if (keyInput.equals("1")) {
             client.setActive(true);
         }
-
         System.out.println("CONFIRMAR USUARIO");
         System.out.println("1 - SI");
         System.out.println("1 - NO");

@@ -7,8 +7,11 @@ import java.util.Scanner;
 import java.util.concurrent.locks.ReadWriteLock;
 
 import Interaction.Reservation;
+import UtilitiesFiles.DataFile;
 import interfaces.Login;
 import rooms.Room;
+
+import javax.xml.crypto.Data;
 
 public class Client implements Login {
     private String name = "";
@@ -16,7 +19,7 @@ public class Client implements Login {
     private String adress = "";
     private String username = "";
     private String password = "";
-    private String id = "";
+    private String id = ""; //documento
     private boolean reservation = false;
     private boolean active = false;
 
@@ -24,7 +27,7 @@ public class Client implements Login {
     }
 
     public boolean isActive() {
-        return active;
+        return this.active;
     }
 
     public void setActive(boolean active) {
@@ -101,27 +104,16 @@ public class Client implements Login {
 
     @Override
     public String toString() {
-        return "Client{" +
-                "name='" + name + '\'' +
-                ", phone='" + phone + '\'' +
-                ", adress='" + adress + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", id='" + id + '\'' +
-                ", reservation=" + reservation +
-                '}';
-    }
-
-
-    public void menuClient() {
-        int option = 0;
-        do {
-            option = optionsMenu();
-            switch (option) {
-                case 1:
-
-            }
-        } while (option != 0);
+        return "\n----------------" +
+                "\nClIENTE" +
+                "\nNOMBRE= " + name + '\'' +
+                "\nTELEFONO= " + phone + '\'' +
+                "\nDIRECCION= " + adress + '\'' +
+                "\nUSUARIO= " + username + '\'' +
+                "\nCONTRASEÑA='" + password + '\'' +
+                "\nDNI='" + id + '\'' +
+                "\nRESERVACION=" + reservation
+                ;
     }
 
     //**FUNCION IMPORTANTE NO DEJAR DE VER**///
@@ -144,44 +136,58 @@ public class Client implements Login {
         System.out.println(this.toString());
     }
 
-    private void changeProfile(List<Client> clientList) {
-        int data;
+    public void changeProfile(List<Client> clientList) {
+        int data = 0;
         do {
             data = menuChangeProfile();
             Scanner scanner = new Scanner(System.in);
             String keyInput;
+            System.out.println("INGRESE EL NUEVO VALOR");
             switch (data) {
                 case 1:
-                    System.out.println(this.getName());
+
                     keyInput = scanner.nextLine();
                     this.setName(keyInput);
                     System.out.println("EL NOMBRE SE CAMBIO A " + this.getName());
+                    break;
                 case 2:
-                    System.out.println(this.getPhone());
+
                     keyInput = scanner.nextLine();
                     this.setPhone(keyInput);
                     System.out.println("EL TELEFONO SE CAMBIO A ");
+                    break;
                 case 3:
-                    System.out.println(this.getAdress());
+
                     keyInput = scanner.nextLine();
                     this.setAdress(keyInput);
                     System.out.println("LA DIRECCION SE CAMBIO A " + this.getAdress());
+                    break;
                 case 4:
-                    System.out.println(this.getUsername());
                     keyInput = scanner.nextLine();
                     this.setUsername(keyInput);
                     System.out.println("EL USERNAME SE CAMBIO A " + this.getUsername());
+                    break;
                 case 5:
-                    System.out.println(this.getPassword());
+
                     keyInput = scanner.nextLine();
                     this.setPassword(keyInput);
                     System.out.println("LA CONTRASEÑA SE CAMBIO A " + this.getPassword());
+                    break;
                 case 6:
-                    System.out.println(this.getId());
                     keyInput = scanner.nextLine();
                     this.setId(keyInput);
                     System.out.println("EL DNI SE CAMBIO A " + this.getId());
                     break;
+                case 7:
+                    System.out.println(this.isActive());
+                    System.out.println("SEGURO QUE QUIERE DAR DE BAJA SU CUENTA?");
+                    keyInput=scanner.nextLine();
+                    System.out.println("1 - SI");
+                    System.out.println("0 - NO");
+                    keyInput = scanner.nextLine();
+                    if (keyInput.equals("1")) {
+                        this.setActive(false);
+                    }
             }
         } while (data != 0);
     }
@@ -190,31 +196,20 @@ public class Client implements Login {
         Scanner scanner = new Scanner(System.in);
         String keyInput;
         System.out.println("que campo desea modificar?");
-        System.out.println("1-NOMBRE \n" +
-                "2-TELEFONO\n" +
-                "3-DIRECCION\n" +
-                "4-USUARIO \n" +
-                "5-CONTRASEÑA \n" +
-                "6-DNI \n" +
+        System.out.println("1 - NOMBRE \n" +
+                "2 - TELEFONO\n" +
+                "3 - DIRECCION\n" +
+                "4 - USUARIO \n" +
+                "5 - CONTRASEÑA \n" +
+                "6 - DNI \n" +
+                "7 - DARSE DE BAJA"+
+
                 "0-SALIR");
         keyInput = scanner.nextLine();
         int aux = Integer.parseInt(keyInput);
         return aux;
     }
 
-    private int optionsMenu() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("1- reservas");
-        System.out.println("2- Mirar perfil");
-        System.out.println("3- Modificar perfil");
-        System.out.println("4- Mirar consumos");
-        System.out.println("0- Para salir");
-        String keyInput;
-        keyInput = scanner.nextLine();
-        int option = Integer.parseInt(keyInput);
-
-        return option;
-    }
 
     @Override
     public <T> boolean login(List<T> genericList) {
@@ -223,34 +218,43 @@ public class Client implements Login {
         List<Client> clientList = (List<Client>) genericList;
         boolean flag = true;
         int exit = 0;
+        int flagAux = 0;
         Scanner scanner = new Scanner(System.in);
         String keyInput;
         do {
             flag = true;
             exit = 0;
-            System.out.println("Ingrese username");
+            System.out.println("INGRESE USERNAME");
             keyInput = scanner.nextLine();
             this.username = keyInput;
-            System.out.println("Ingrese password");
+            System.out.println("INGRESE CONTRASEÑA");
             keyInput = scanner.nextLine();
             this.password = keyInput;
             System.out.println("");
-            if(!this.isActive()) {
-                if (!confirmUser(this.username, this.password, clientList)) {
-                    flag = false;
+            boolean aux = confirmUser(this.username, this.password, clientList);
+            if (!aux) {
+                flag = false;
 
-                    System.out.println("El usuario o la contraseña son incorrectos\n");
-                    System.out.println("Desea salir?");
+                System.out.println("EL USUARIO / CONTRASEÑA SON INCORRECTOS\n");
+                System.out.println("DESEA SALIR?? \n" +
+                        "1 - SI\n" +
+                        "0 - NO");
 //              se scanea exit, si es 1 se quiere ir, 0 si quiere reintentar.
-                    keyInput = scanner.nextLine();
-                    exit = Integer.parseInt(keyInput);
-                }
-            }else
-            {
-                System.out.println("SU USUARIO NO ESTÁ ACTIVO, ESPERE A UN ADMINISTRADOR PARA DAR DE ALTA");
+                keyInput = scanner.nextLine();
+                exit = Integer.parseInt(keyInput);
             }
-        } while (!flag && exit == 0 && this.isActive());
+            if (aux) {
+                if (!this.isActive()) {
+                    System.out.println("SU USUARIO NO ESTÁ ACTIVO, ESPERE A UN ADMINISTRADOR PARA DAR DE ALTA");
+                    flagAux = 1;
+                }
+            }
 
+        } while (!flag && exit == 0 && !this.isActive());
+
+        if (flagAux == 1) {
+            flag = false;
+        }
         return flag;
 
     }
@@ -262,16 +266,40 @@ public class Client implements Login {
         List<Client> auxList = (List<Client>) genericList;
 
         for (Client aux : auxList) {
-            if (Username.equals(aux.getUsername()) && Password.equals(aux.getUsername())) {
+            if (Username.equals(aux.getUsername()) && Password.equals(aux.getPassword())) {
                 this.setAdress(aux.getAdress());
                 this.setId(aux.getId());
                 this.setName(aux.getName());
                 this.setPhone(aux.getPhone());
                 this.setReservation(aux.reservation);
+                this.setActive(aux.isActive());
                 flag = true;
             }
         }
-
         return flag;
     }
+
+    public void createNewClient(List<Client> clientList, String path) {
+        Scanner scanner = new Scanner(System.in);
+        String keyInput;
+
+        System.out.println("INGRESE NOMBRE");
+        this.setName(scanner.nextLine());
+        System.out.println("INGRESE TELEFONO");
+        this.setPhone(scanner.nextLine());
+        System.out.println("INGRESE DIRECCION");
+        this.setAdress(scanner.nextLine());
+        System.out.println("INGRESE USUARIO");
+        this.setUsername(scanner.nextLine());
+        System.out.println("INGRESE CONTRASEÑA");
+        this.setPassword(scanner.nextLine());
+        System.out.println("INGRESE DNI");
+        this.setId(scanner.nextLine());
+        this.setActive(true);
+        DataFile dataFile = new DataFile();
+        clientList.add(this);
+        dataFile.saveOnFile(clientList, path);
+
+    }
+
 }

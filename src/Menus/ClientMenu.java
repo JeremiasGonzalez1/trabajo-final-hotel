@@ -9,79 +9,32 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ClientMenu {
-    public int menuChangeProfile(){
-        Scanner scanner =new Scanner(System.in);
+    public int menuChangeProfile() {
+        Scanner scanner = new Scanner(System.in);
         String keyInput;
         System.out.println("que campo desea modificar?");
-        System.out.println("1-NOMBRE \n" +
-                "2-TELEFONO\n" +
-                "3-DIRECCION\n" +
-                "4-USUARIO \n" +
-                "5-PASSWORD \n" +
-                "6-DNI");
-        keyInput=scanner.nextLine();
-        int aux=Integer.parseInt(keyInput);
+        System.out.println("1 - NOMBRE \n" +
+                "2 - TELEFONO\n" +
+                "3 - DIRECCION\n" +
+                "4 - USUARIO \n" +
+                "5 - PASSWORD \n" +
+                "6 - DNI\n" +
+                "7 - DAR DE BAJA LA CUENTA\n" +
+                "0 - SALIR");
+        keyInput = scanner.nextLine();
+        int aux = Integer.parseInt(keyInput);
 
         return aux;
     }
 
-    public Client switchMenuChangeProfile(int option, Client client){
-        Scanner scanner = new Scanner(System.in);
-
-        String keyInput;
-
-        switch (option){
-            case 1:
-                System.out.println("INGRESE NUEVO NOMBRE : ");
-                keyInput = scanner.nextLine();
-                client.setName(keyInput);
-                break;
-            case 2:
-                System.out.println("INGRESE NUEVO NUMERO DE TELEFONO : ");
-                keyInput = scanner.nextLine();
-                client.setPhone(keyInput);
-                break;
-            case 3:
-                System.out.println("INGRESE NUEVA DIRECCION : ");
-                keyInput = scanner.nextLine();
-                client.setAdress(keyInput);
-                break;
-            case 4:
-                System.out.println("INGRESE NUEVA USERNAME : ");
-                keyInput = scanner.nextLine();
-                client.setUsername(keyInput);
-                break;
-            case 5:
-                System.out.println("INGRESE NUEVA CONTRASEÑA : ");
-                keyInput = scanner.nextLine();
-                client.setPassword(keyInput);
-                break;
-            case 6:
-                System.out.println("INGRESE NUEVO DNI : ");
-                keyInput = scanner.nextLine();
-                client.setId(keyInput);
-                break;
-            case 7:
-                System.out.println("SEGURO QUE QUIERE DAR DE BAJA SU CUENTA?");
-                System.out.println("1 - SI");
-                System.out.println("0 - NO");
-                keyInput = scanner.nextLine();
-                if(keyInput.equals("1")){
-                    client.setActive(false);
-                }
-                break;
-        }
-
-        return client;
-    }
 
     public int optionsMenu() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("1- reservas");
-        System.out.println("2- Mirar perfil");
-        System.out.println("3- Modificar perfil");
-        System.out.println("4- Mirar consumos");
-        System.out.println("0- Para salir");
+        System.out.println("1 - RESERVAR");
+        System.out.println("2 - MIRAR PERFIL");
+        System.out.println("3 - MODIFICAR PERFIL");
+        System.out.println("4 - MIRAR RESERVAS");
+        System.out.println("0 - PARA SALIR");
         String keyInput;
         keyInput = scanner.nextLine();
         int option = Integer.parseInt(keyInput);
@@ -89,38 +42,81 @@ public class ClientMenu {
         return option;
     }
 
-    public void switchOptionsMenu(Client client, List<Reservation> reservationList, List<Room> roomList, List <Client> clientList, String path){
-        int i = clientList.indexOf(client);
+    public void switchOptionsMenu(Client client, List<Reservation> reservationList, List<Room> roomList, List<Client> clientList, String path) {
+        int i = 0;
+        int size=clientList.size();
+        boolean flag=false;
+        while (i<size && !flag){
+            if(clientList.get(i).getUsername().equals(client.getUsername())){
+                flag=true;
+            }
+            i++;
+        }
         Scanner scanner = new Scanner(System.in);
         String keyInput;
         Reservation reservation = new Reservation();
         DataFile dataFile = new DataFile();
-        int optionAux = 0, option = 0;
-        do {
-            option = optionsMenu();
-            switch (option) {
-                case 1:
-                    reservation.dataReservation(roomList, reservationList, client.getUsername());
-                    break;
-                case 2:
-                    System.out.println(client.toString());
-                    break;
-                case 3:
-                    optionAux = menuChangeProfile();
-                    if (optionAux < 8) {
-                        System.out.println("SU PERFIL SIN CAMBIOS : " + client.toString());
-                        client = switchMenuChangeProfile(optionAux, client);
+        Client clientAux = new Client();
+        int option = 0;
+        if(i<size) {
+            do {
+                option = optionsMenu();
+                switch (option) {
+                    case 1:
+                        reservation.dataReservation(roomList, reservationList, client.getUsername());
+                        break;
+                    case 2:
+                        System.out.println(client.toString());
+                        break;
+                    case 3:
+                        clientAux = client;
+                        client.changeProfile(clientList);
                         System.out.println("SU PERFIL CON CAMBIOS : " + client.toString());
                         System.out.println("DESEA APLICAR LOS CAMBIOS?");
                         System.out.println("1 - SI");
                         System.out.println("0 - NO");
                         keyInput = scanner.nextLine();
+                        i--;
                         if (keyInput.equals("1")) {
                             clientList.set(i, client);
                             dataFile.saveOnFile(clientList, path);
+                        } else {
+                            client = clientAux;
                         }
-                    }
+
+                }
+            } while (option != 0 && client.isActive());
+        }else{
+            System.out.println("OCURRIO UN ERROR");
+        }
+
+    }
+
+    public int secondMenuClient() {
+        Scanner scanner = new Scanner(System.in);
+        String keyInput;
+        System.out.println("1 - REGISTRARSE");
+        System.out.println("2 - LOGEARSE");
+        System.out.println("0 - SALIR");
+
+        return Integer.parseInt(keyInput = scanner.nextLine());
+    }
+
+    public boolean secondSwitchMenuClient(List<Client> clientList, String path, Client client) {
+        int option = 0;
+        boolean flag = false;
+        do {
+            option = secondMenuClient();
+            switch (option) {
+                case 1:
+                    client.createNewClient(clientList, path);
+                    break;
+                case 2:
+                    flag = client.login(clientList);
+                    break;
             }
-        }while(optionAux!= 7 && option != 0);
+        } while (option != 0 && !flag);
+
+        return flag;
     }
 }

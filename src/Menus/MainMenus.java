@@ -3,6 +3,7 @@ package Menus;
 import Empleados.Admin;
 import Empleados.Employee;
 import Empleados.Receptionist;
+import Interaction.Check;
 import Interaction.Client;
 import Interaction.Reservation;
 import Sign.Sign;
@@ -21,6 +22,7 @@ public class MainMenus {
 
         System.out.println("1 - INGRESAR COMO CLIENTE\n");
         System.out.println("2 - INGRESAR COMO EMPLEADO\n");
+        System.out.println("0 - PARA SALIR");
         keyString = scanner.nextLine();
         option = Integer.parseInt(keyString);
 
@@ -28,7 +30,7 @@ public class MainMenus {
     }
 
     public void switchMainMenu() {
-        int generalOption = mainMenu();
+
         ///VARIABLES
         ///V.BOOLEANS
         boolean clientBoolean = false;
@@ -59,42 +61,45 @@ public class MainMenus {
         String nameFileSign = "sign.json";
         String nameFileReservation = "reservas.json";
         String nameFileClient = "Client.json";
+        String nameFileCheck= "chek.json";
         ///LISTAS
         List<Room> roomList = new ArrayList<>();
         List<Employee> employeeList = new ArrayList<>();
         List<Reservation> reservationList = new ArrayList<>();
         List<Sign> signList = new ArrayList<>();
         List<Client> clientList = new ArrayList<>();
+        List<Check>checkList=new ArrayList<>();
         ///CARGAR LISTAS
         roomList = dataFile.readLists(nameFileRoom, Room.class);
         employeeList = dataFile.readLists(nameFileEmployee, Employee.class);
         reservationList = dataFile.readLists(nameFileReservation, Reservation.class);
         signList = dataFile.readLists(nameFileSign, Sign.class);
-
-        switch (generalOption) {
-            case 1:
-                clientBoolean = client.login(clientList);
-                if (clientBoolean) {
-                    clientMenu.switchOptionsMenu(client, reservationList, roomList, clientList, nameFileClient);
-                }
-                break;
-            case 2:
-                employeeBoolean = employee.login(employeeList);
-                if (employeeBoolean) {
-                    if (employee.getAdmin()) {
+        clientList=dataFile.readLists(nameFileClient, Client.class);
+        checkList=dataFile.readLists(nameFileCheck, Check.class);
+        int generalOption = 0;
+        do {
+            generalOption=mainMenu();
+            switch (generalOption) {
+                case 1:
+                    clientBoolean = clientMenu.secondSwitchMenuClient(clientList, nameFileClient, client);
+                    if (clientBoolean) {
+                        clientMenu.switchOptionsMenu(client, reservationList, roomList, clientList, nameFileClient);
+                    }
+                    break;
+                case 2:
+                    employeeBoolean = employee.login(employeeList);
+                    if (employeeBoolean) {
+                        if (employee.getAdmin()) {
                             admin = new Admin(employee);
-                            adminMenu.switchOptionMenuAdmin(admin, clientList, reservationList, employeeList, roomList, nameFileClient, nameFileReservation, nameFileRoom, nameFileEmployee);
-
-                    } else {
-                        if (employee instanceof Receptionist) {
-                            receptionist = (Receptionist) employee;
-                            System.out.println("sdsdsds");
-
+                            adminMenu.switchOptionMenuAdmin(admin, clientList, reservationList, employeeList, roomList, nameFileClient, nameFileReservation, nameFileRoom, nameFileEmployee, checkList, nameFileCheck);
+                        } else {
+                                receptionist = new Receptionist(employee);
                         }
                     }
-                }
-                break;
+                    break;
 
-        }
+            }
+        }while (generalOption!=0);
+
     }
 }

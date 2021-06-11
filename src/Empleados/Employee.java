@@ -85,8 +85,10 @@ public class Employee implements Login{
             if (!confirmUser(this.username, this.password, employeeList)) {
                 flag = false;
 
-                System.out.println("El usuario o la contraseña son incorrectos\n");
-                System.out.println("Desea salir?");
+                System.out.println("USUARIO / CONTRASEÑA INCORRECTOS\n");
+                System.out.println("DESEA SALIR? \n" +
+                        "1 - SI\n" +
+                        "0 - NO");
 //              se scanea exit, si es 1 se quiere ir, 0 si quiere reintentar.
                 keyInput = scanner.nextLine();
                 exit = Integer.parseInt(keyInput);

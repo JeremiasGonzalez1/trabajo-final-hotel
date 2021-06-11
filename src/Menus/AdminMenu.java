@@ -3,6 +3,7 @@ package Menus;
 import Empleados.Admin;
 import Empleados.Employee;
 import Empleados.Receptionist;
+import Interaction.Check;
 import Interaction.Client;
 import Interaction.Reservation;
 import UtilitiesFiles.DataFile;
@@ -39,12 +40,15 @@ public class AdminMenu {
         return option;
     }
 
-    public void switchOptionMenuAdmin(Admin admin, List<Client> clientList, List<Reservation> reservationList, List<Employee> employeeList, List<Room> roomList, String clientPath, String reservationPath, String roomPath, String employeePath ){
+    public void switchOptionMenuAdmin(Admin admin, List<Client> clientList, List<Reservation> reservationList, List<Employee> employeeList, List<Room> roomList, String clientPath, String reservationPath, String roomPath, String employeePath, List<Check>checkList,
+                                      String checkPath){
         int option = 0;
         do {
             option = optionsMenu();
             Scanner scanner = new Scanner(System.in);
+            Scanner scanner1=new Scanner(System.in);
             String keyInput;
+            String usernameClient;
 
             switch (option) {
                 case 1:
@@ -77,6 +81,13 @@ public class AdminMenu {
                 case 10:
                     admin.registerReceptionist(employeeList, employeePath);
                     break;
+                case 11:
+                    System.out.println("INGRESE USUARIO DEL CLIENTE");
+                    usernameClient=scanner1.nextLine();
+                    admin.createCheckOnReservation(reservationList,clientList,roomList, checkList, usernameClient, checkPath, roomPath);
+                    break;
+                case 12:
+                    System.out.println();
             }
         }while(option!= 0);
     }
@@ -166,8 +177,6 @@ public class AdminMenu {
                     }
                 }
         }
-
-       dataFile.saveOnFile(clientList, path);
     }
 
     public int changeDataEmployee() {

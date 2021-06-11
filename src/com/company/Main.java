@@ -64,8 +64,7 @@ public class Main {
 //        reservation.dataReservation(roomList,reservationList, "pepe");
 //        System.out.println(reservationList.toString());
 
-        mainMenus.switchMainMenu();
-
+mainMenus.switchMainMenu();
         ///SWITCH PRINCIPAL
 //        menuOption = mainMenus.mainMenu();
 //        switch (menuOption){
