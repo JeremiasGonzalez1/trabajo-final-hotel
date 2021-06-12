@@ -2,7 +2,6 @@ package Menus;
 
 import Empleados.Admin;
 import Empleados.Employee;
-import Empleados.Receptionist;
 import Interaction.Check;
 import Interaction.Client;
 import Interaction.Reservation;
@@ -30,7 +29,7 @@ public class AdminMenu {
         System.out.println("8 - MODIFICAR UN EMPLEADO");
         System.out.println("9 - CREAR UN CLIENTE");
         System.out.println("10 - CREAR UN EMPLEADO");
-        System.out.println("11- CHECK IN");
+        System.out.println("11 - CHECK IN");
         System.out.println("12 - CHECK OUT");
         System.out.println("0 - SALIR");
 
@@ -87,7 +86,8 @@ public class AdminMenu {
                     admin.createCheckOnReservation(reservationList,clientList,roomList, checkList, usernameClient, checkPath, roomPath);
                     break;
                 case 12:
-                    System.out.println();
+                    admin.checkOut(checkList, checkPath);
+                    break;
             }
         }while(option!= 0);
     }
@@ -158,22 +158,21 @@ public class AdminMenu {
                 }
                 break;
             case 8:
-                System.out.println("SEGURO QUE QUIERE ELEMINAR LAS RESERVAS DE ESTE CLIENTE?");
+                System.out.println("SEGURO QUE QUIERE ELIMINAR LAS RESERVAS DE ESTE CLIENTE?");
                 System.out.println("1 - SI");
                 System.out.println("0 - NO");
                 keyInput = scanner.nextLine();
                 if (keyInput.equals("1")) {
-                    client.setReservation(false);
-                }
-                List<Reservation> delete = new ArrayList<>();
-                for (Reservation aux : reservationList) {
-                    if (aux.getUsernameClient().equals(client.getUsername())) {
-                        delete.add(aux);
+                    List<Reservation> delete = new ArrayList<>();
+                    for (Reservation aux : reservationList) {
+                        if (aux.getUsernameClient().equals(client.getUsername())) {
+                            delete.add(aux);
+                        }
                     }
-                }
-                for (Reservation aux : delete) {
-                    if (reservationList.contains(aux)) {
-                        reservationList.remove(aux);
+                    for (Reservation aux : delete) {
+                        if (reservationList.contains(aux)) {
+                            reservationList.remove(aux);
+                        }
                     }
                 }
         }

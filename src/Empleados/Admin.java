@@ -4,8 +4,6 @@ import Interaction.Client;
 import Interaction.Reservation;
 import Menus.AdminMenu;
 import UtilitiesFiles.DataFile;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -43,9 +41,7 @@ public class Admin extends Receptionist {
         employee.setTurn(scanner.nextLine());
         System.out.println("Ingrese puesto");
         employee.setAdmin(isAdmin());
-        System.out.println(employee.toString());
         employeeList.add(employee);
-
         dataFile.saveOnFile(employeeList, path);
     }
 
@@ -155,34 +151,6 @@ public class Admin extends Receptionist {
         } while (flag2);
     }
 
-    public Employee adminSearchEmployee(List <Employee> employeeList){
-        Scanner scanner = new Scanner(System.in);
-        String usernameEmployee;
-        Employee employee = new Employee();
-        int flag = 0;
-        int flag2 = 0;
-        do {
-            System.out.println("INGRESE USUARIO DEL CLIENTE");
-            usernameEmployee = scanner.nextLine();
-            for (Employee aux : employeeList) {
-                if (aux.getUsername().equals(usernameEmployee)) {
-                    flag = 1;
-                    employee = aux;
-                }
-            }
-
-            if (flag == 0) {
-                System.out.println("EL USUARIO INGRESADO NO COINCIDE CON NUESTROS DATOS, DESEA REINTENTAR? \n" +
-                        "1 PARA SI \n" +
-                        "0 PARA NO");
-                String keyInput;
-                keyInput = scanner.nextLine();
-                flag2 = Integer.parseInt(keyInput);
-            }
-        } while (flag != 1 && flag2 == 0);
-
-        return employee;
-    }
     public void activeAllClients(List<Client> clientList, String path){
         int size = clientList.size();
         int i = 0;

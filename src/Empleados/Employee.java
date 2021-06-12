@@ -1,6 +1,5 @@
 package Empleados;
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 import interfaces.Login;
 
@@ -62,11 +61,20 @@ public class Employee implements Login{
         this.turn = turn;
     }
 
+    public String getJob(){
+        String n;
+        if(isAdmin){
+            n = "ADMINISTRADOR";
+        }else
+        {
+            n = "RECEPCIONISTA";
+        }
+
+        return n;
+    }
 
     @Override
     public <T> boolean login(List<T> genericList) {
-        String username;
-        String password;
         List <Employee> employeeList = (List <Employee>) genericList;
         boolean flag = true;
         int exit = 0;
@@ -104,13 +112,11 @@ public class Employee implements Login{
 
     @Override
     public String toString() {
-        return "Employee{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", turn='" + turn + '\'' +
-                ", isAdmin=" + isAdmin +
-                ", salary=" + salary +
-                '}';
+        return getJob() +
+                "\nUSUARIO : " + username +
+                "\nCONTRASEÑA : " + password +
+                "\nTURNO : " + turn +
+                "\nSALARIO : " + salary + "\n\n";
     }
 
     @Override
@@ -131,16 +137,4 @@ public class Employee implements Login{
         return flag;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Employee employee = (Employee) o;
-        return Double.compare(employee.salary, salary) == 0 && Objects.equals(username, employee.username) && Objects.equals(password, employee.password) && Objects.equals(turn, employee.turn) && Objects.equals(isAdmin, employee.isAdmin);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(username, password, turn, isAdmin, salary);
-    }
 }

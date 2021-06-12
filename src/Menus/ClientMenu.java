@@ -66,7 +66,7 @@ public class ClientMenu {
                         reservation.dataReservation(roomList, reservationList, client.getUsername());
                         break;
                     case 2:
-                        System.out.println(client.toString());
+                        client.seeProfile();
                         break;
                     case 3:
                         clientAux = client;
@@ -83,7 +83,10 @@ public class ClientMenu {
                         } else {
                             client = clientAux;
                         }
-
+                        break;
+                    case 4:
+                        client.seeReservations(reservationList);
+                        break;
                 }
             } while (option != 0 && client.isActive());
         }else{
@@ -94,12 +97,11 @@ public class ClientMenu {
 
     public int secondMenuClient() {
         Scanner scanner = new Scanner(System.in);
-        String keyInput;
         System.out.println("1 - REGISTRARSE");
         System.out.println("2 - LOGEARSE");
         System.out.println("0 - SALIR");
 
-        return Integer.parseInt(keyInput = scanner.nextLine());
+        return Integer.parseInt(scanner.nextLine());
     }
 
     public boolean secondSwitchMenuClient(List<Client> clientList, String path, Client client) {

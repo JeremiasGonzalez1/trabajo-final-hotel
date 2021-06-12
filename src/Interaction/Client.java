@@ -1,17 +1,8 @@
 package Interaction;
-
-import java.awt.event.KeyEvent;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.locks.ReadWriteLock;
-
-import Interaction.Reservation;
 import UtilitiesFiles.DataFile;
 import interfaces.Login;
-import rooms.Room;
-
-import javax.xml.crypto.Data;
 
 public class Client implements Login {
     private String name = "";
@@ -20,7 +11,6 @@ public class Client implements Login {
     private String username = "";
     private String password = "";
     private String id = ""; //documento
-    private boolean reservation = false;
     private boolean active = false;
 
     public Client() {
@@ -32,17 +22,6 @@ public class Client implements Login {
 
     public void setActive(boolean active) {
         this.active = active;
-    }
-
-    public Client(String name, String phone, String adress, String username, String password, String id) {
-        this.name = name;
-        this.phone = phone;
-        this.adress = adress;
-        this.username = username;
-        this.password = password;
-        this.id = id;
-        this.reservation = false;
-        this.active = false;
     }
 
     public String getName() {
@@ -93,46 +72,28 @@ public class Client implements Login {
         this.id = id;
     }
 
-    public boolean isReservation() {
-        return reservation;
-    }
-
-    public void setReservation(boolean reservation) {
-        this.reservation = reservation;
-    }
-
 
     @Override
     public String toString() {
-        return "\n----------------" +
-                "\nClIENTE" +
-                "\nNOMBRE= " + name + '\'' +
-                "\nTELEFONO= " + phone + '\'' +
-                "\nDIRECCION= " + adress + '\'' +
-                "\nUSUARIO= " + username + '\'' +
-                "\nCONTRASEÑA='" + password + '\'' +
-                "\nDNI='" + id + '\'' +
-                "\nRESERVACION=" + reservation
-                ;
+        return
+                "\nClIENTE \n" +
+                "\nNOMBRE : " + name +
+                "\nTELEFONO : " + phone +
+                "\nDIRECCION : " + adress +
+                "\nUSUARIO : " + username +
+                "\nCONTRASEÑA : " + password +
+                "\nDNI : " + id + "\n\n";
     }
 
-    //**FUNCION IMPORTANTE NO DEJAR DE VER**///
-
-    public void createReservation(List<Reservation> reservationList, List<Room> roomList, String usernameClient) {
-        Reservation reservation = new Reservation();
-        reservation.dataReservation(roomList, reservationList, this.getUsername());
-    }
-
-    private void seeReservations(List<Reservation> reservationList) {
-
+    public void seeReservations(List<Reservation> reservationList) {
         for (Reservation reservation : reservationList) {
-            if (reservation.getUsernameClient() == this.username) {
+            if (reservation.getUsernameClient().equals(this.username)) {
                 System.out.println(reservation.toString());
             }
         }
     }
 
-    private void seeProfile() {
+    public void seeProfile() {
         System.out.println(this.toString());
     }
 
@@ -271,7 +232,6 @@ public class Client implements Login {
                 this.setId(aux.getId());
                 this.setName(aux.getName());
                 this.setPhone(aux.getPhone());
-                this.setReservation(aux.reservation);
                 this.setActive(aux.isActive());
                 flag = true;
             }

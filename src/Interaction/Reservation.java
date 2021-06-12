@@ -3,16 +3,15 @@ package Interaction;
 import UtilitiesFiles.DataFile;
 import interfaces.RoomCheck;
 import rooms.Room;
-import rooms.RoomStatus;
 
-import java.io.File;
+import java.time.LocalDate;
 import java.util.*;
 
 
 public class Reservation implements RoomCheck {
 
-    private Date dateAdmission = new Date();
-    private Date dateOut = new Date();
+    private String dateAdmission;
+    private String dateOut;
     private int numRoom = 0;
     private String usernameClient = "";
 
@@ -23,26 +22,26 @@ public class Reservation implements RoomCheck {
         usernameClient = "";
     }
 
-    public Reservation(Date dateAdmission, Date dateOut, String usernameClient) {
-        this.dateAdmission = dateAdmission;
-        this.dateOut = dateOut;
+    public Reservation(LocalDate dateAdmission, LocalDate dateOut, String usernameClient) {
+        this.dateAdmission = dateAdmission.toString();
+        this.dateOut = dateOut.toString();
         this.numRoom = 0;
         this.usernameClient = usernameClient;
     }
 
-    public Date getDateAdmission() {
+    public String getDateAdmission() {
         return dateAdmission;
     }
 
-    public void setDateAdmission(Date dateAdmission) {
+    public void setDateAdmission(String dateAdmission) {
         this.dateAdmission = dateAdmission;
     }
 
-    public Date getDateOut() {
+    public String getDateOut() {
         return dateOut;
     }
 
-    public void setDateOut(Date dateOut) {
+    public void setDateOut(String dateOut) {
         this.dateOut = dateOut;
     }
 
@@ -63,7 +62,7 @@ public class Reservation implements RoomCheck {
     }
 
     @Override
-    public void consultaHabitacion(int numberBed, Date in, Date out, List<Room> roomList, List<Reservation> reservationList) {
+    public void consultaHabitacion(int numberBed, LocalDate in, LocalDate out, List<Room> roomList, List<Reservation> reservationList) {
 
         List<Room> theBestListOfBedsRevolutionsDefinitive = new ArrayList<>();
         List<Room> bedsList = new ArrayList<>();
@@ -75,8 +74,11 @@ public class Reservation implements RoomCheck {
         }
 
         for (Reservation rAux : reservationList) {
-            if ((out.compareTo(rAux.getDateAdmission())>=0 && out.compareTo(rAux.getDateOut())<= 0) || in.compareTo(rAux.getDateAdmission())>=0 && in.compareTo(rAux.getDateOut())<=0) {
-               ///En este if compara si la fecha de salida o la de entrada chocan con las de las reservas
+            LocalDate rAuxAdmission = LocalDate.parse(rAux.getDateAdmission());
+            LocalDate rAuxOut = LocalDate.parse(rAux.getDateOut());
+            if ((out.compareTo(rAuxAdmission) >= 0 && out.compareTo(rAuxOut) <= 0) ||
+                    (in.compareTo(rAuxAdmission) >= 0 && in.compareTo(rAuxOut) <= 0)) {
+                ///En este if compara si la fecha de salida o la de entrada chocan con las de las reservas
                 for (Room room : bedsList) {
                     ///Si entra en el if anterior, lo que tenemos que buscar es la habitacion ocupada.
                     if (room.getId() == rAux.getNumRoom()) {
@@ -97,60 +99,62 @@ public class Reservation implements RoomCheck {
 
         Scanner scanner = new Scanner(System.in);
         String keyInput;
-        System.out.println("DESEA RESERVAR? \n" +
-                "1-PARA SI\n" +
-                "0-PARA NO");
-        keyInput = scanner.nextLine();
-        int dato = Integer.parseInt(keyInput);
-        if (dato == 1)///Si el scan es true
-        {
-            System.out.println(bedsList.toString());
-            this.selectRoom(bedsList, in, out, reservationList);
-        }
+        System.out.println(bedsList.toString());
+        this.selectRoom(bedsList, in, out, reservationList);
+
     }
 
     public void dataReservation(List<Room> roomList, List<Reservation> reservationList, String usernameClient) {
         this.setUsernameClient(usernameClient);
         this.upDateIn();
         this.upDateOut();
+        boolean flag = true;
         Scanner scanner = new Scanner(System.in);
         String keyInput;
-        System.out.println("CUANTAS CAMAS BUSCA?");
-        keyInput = scanner.nextLine();
-        int beds = Integer.parseInt(keyInput);
-        System.out.println(this.toString());
-        this.consultaHabitacion(beds, this.getDateAdmission(), this.getDateOut(), roomList, reservationList);
+        int beds;
+        do {
+            System.out.println("CUANTAS CAMAS BUSCA?");
+            System.out.println("1 - MATRIMONIAL");
+            System.out.println("2 - DOBLE CAMA SIMPLE");
+            System.out.println("3 - MATRIMONIAL CON DOS CAMAS SIMPLES");
+            keyInput = scanner.nextLine();
+            beds = Integer.parseInt(keyInput);
+            if (beds > 3 || beds < 1) {
+                flag = false;
+                System.out.println("POR FAVOR, INGRESE UN NUMERO VALIDO");
+            }else{
+                flag = true;
+            }
+        }while(!flag);
+
+        this.consultaHabitacion(beds, LocalDate.parse(this.getDateAdmission()), LocalDate.parse(this.getDateOut()), roomList, reservationList);
     }
 
     //metodo para ingreso de ingreso
     private void upDateIn() {
         Scanner scanner = new Scanner(System.in);
-        String keyInput;
+        String keyInputM, keyInputD, date;
         System.out.println("COLOQUE MES DE INGRESO");
-        keyInput = scanner.nextLine();
-        int mont = Integer.parseInt(keyInput);
+        keyInputM = scanner.nextLine();
         System.out.println("COLOQUE DIA DE INGRESO");
-        keyInput = scanner.nextLine();
-        int day = Integer.parseInt(keyInput);
-        Date date = new Date(2021, mont, day);
+        keyInputD = scanner.nextLine();
+        date = "2021-" + keyInputM + "-" + keyInputD;
         this.setDateAdmission(date);
     }
 
     //metodo para ingresa fecha de egreso
     public void upDateOut() {
         Scanner scanner = new Scanner(System.in);
-        String keyImput;
+        String keyImputM, keyImputD, date;
         System.out.println("COLOQUE MES DE EGRESO");
-        keyImput = scanner.nextLine();
-        int mont = Integer.parseInt(keyImput);
+        keyImputM = scanner.nextLine();
         System.out.println("COLOQUE DIA DE EGRESO");
-        keyImput = scanner.nextLine();
-        int day = Integer.parseInt(keyImput);
-        Date date = new Date(2021, mont, day);
+        keyImputD = scanner.nextLine();
+        date = "2021-" + keyImputM + "-" + keyImputD;
         this.setDateOut(date);
     }
 
-    private int selectRoom(List<Room> listOfBeds, Date dateIn, Date dateOut, List<Reservation> reservationList) {
+    private int selectRoom(List<Room> listOfBeds, LocalDate dateIn, LocalDate dateOut, List<Reservation> reservationList) {
         int flag = 0;
 
         int flag2 = 0;
@@ -184,11 +188,13 @@ public class Reservation implements RoomCheck {
         return flag;
     }
 
-    private void resevar(int id, Date in, Date out, List<Reservation> reservationList) {
-        String pathReservation = "reservas.json";
-        System.out.println("Seguro de que quiere reservar?");
+    private void resevar(int id, LocalDate in, LocalDate out, List<Reservation> reservationList) {
         Scanner scanner = new Scanner(System.in);
         String keyInput;
+        String pathReservation = "Reservas.json";
+        System.out.println("SEGURO DE QUE QUERES RESERVAR?");
+        System.out.println("1 - SI");
+        System.out.println("0 - NO");
         keyInput = scanner.nextLine();
         int flag = Integer.parseInt(keyInput);
         if (flag == 1) {
@@ -202,12 +208,12 @@ public class Reservation implements RoomCheck {
 
     @Override
     public String toString() {
-        return "Reservation{" +
-                "dateAdmission=" + dateAdmission +
-                ", dateOut=" + dateOut +
-                ", numRoom=" + numRoom +
-                ", usernameClient='" + usernameClient + '\'' +
-                '}';
+        return "RESERVA\n" +
+                "DIA DE INGRESO : " + dateAdmission +
+                "\nDIA DE EGRESO : " + dateOut +
+                "\nNUMERO DE HABITACION : " + numRoom +
+                "\nUSUARIO DEL CLIENTE : " + usernameClient +
+                "\n\n";
     }
 
 

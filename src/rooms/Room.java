@@ -1,5 +1,6 @@
 package rooms;
 
+
 public class Room{
     private int numberBeds=0;
     private int id = 0;
@@ -37,12 +38,25 @@ public class Room{
         this.id = id;
     }
 
+    private String seeTypeRoom(){
+        String type;
+        if(this.getNumberBeds() == 1){
+            type = "1 - MATRIMONIAL";
+        }else if(this.getNumberBeds() == 2){
+            type = "2 - DOBLE CAMA SIMPLE";
+        }else
+        {
+            type = "3 - MATRIMONIAL CON DOS CAMAS SIMPLES";
+        }
+
+        return type;
+    }
+
     @Override
     public String toString() {
-        return "Room{" +
-                "numberBeds=" + numberBeds +
-                ", id=" + id +
-                ", status=" + roomStatus +
-                '}' + "\n" ;
+        return "HABITACION NRO : " + id +
+                "\nTIPO DE HABITACION : " + seeTypeRoom() +
+                "\nESTADO : " + roomStatus +
+                 "\n\n" ;
     }
 }

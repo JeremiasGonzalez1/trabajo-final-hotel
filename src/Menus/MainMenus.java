@@ -48,20 +48,15 @@ public class MainMenus {
         ClientMenu clientMenu = new ClientMenu();
         AdminMenu adminMenu = new AdminMenu();
         ReceptionistMenu receptionistMenu = new ReceptionistMenu();
-        ///V.OPTIONS
-        int menuOption = 0;
-        int clientOption = 0;
-        int adminOption = 0;
-        int receptionistOption = 0;
         ///DATAFILE
         DataFile dataFile = new DataFile();
         ///PATHS
         String nameFileRoom = "Rooms.json";
-        String nameFileEmployee = "employee.json";
-        String nameFileSign = "sign.json";
-        String nameFileReservation = "reservas.json";
+        String nameFileEmployee = "Employee.json";
+        String nameFileSign = "Sign.json";
+        String nameFileReservation = "Reservas.json";
         String nameFileClient = "Client.json";
-        String nameFileCheck= "chek.json";
+        String nameFileCheck= "Check.json";
         ///LISTAS
         List<Room> roomList = new ArrayList<>();
         List<Employee> employeeList = new ArrayList<>();
@@ -94,6 +89,7 @@ public class MainMenus {
                             adminMenu.switchOptionMenuAdmin(admin, clientList, reservationList, employeeList, roomList, nameFileClient, nameFileReservation, nameFileRoom, nameFileEmployee, checkList, nameFileCheck);
                         } else {
                                 receptionist = new Receptionist(employee);
+                                receptionistMenu.switchInitialReceptionistMenu(receptionist, checkList,nameFileCheck,reservationList,clientList,roomList,nameFileRoom, signList);
                         }
                     }
                     break;
